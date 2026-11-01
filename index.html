@@ -6,10 +6,10 @@
 <title>Faizan Bari</title>
 <meta name="description" content="Faizan Bari: theoretical physics at IMSc Chennai, black holes and quantum gravity, and writing about growing up in Kashmir.">
 <meta property="og:title" content="Faizan Bari">
-<meta property="og:description" content="Theoretical physics at IMSc Chennai: black holes and quantum gravity, and writing about growing up in Kashmir.">
+<meta property="og:description" content="Faizan Bari: theoretical physics at IMSc Chennai, black holes and quantum gravity, and writing about growing up in Kashmir.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 15 L5 30 M16 15 L27 30' stroke='%232B5D51' stroke-width='2.2' fill='none'/%3E%3Ccircle cx='16' cy='13' r='6' fill='%23A33F28'/%3E%3C/svg%3E">
-<style>:root{color-scheme:light}</style>
+<script>try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
@@ -49,6 +49,7 @@ body{
   padding-right:max(16px, env(safe-area-inset-right, 0px));
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
+  position:relative;
 }
 .wrap{max-width:66rem;margin:0 auto}
 a{color:var(--pine);text-decoration-thickness:1px;text-underline-offset:3px}
@@ -56,27 +57,27 @@ a:hover{color:var(--chinar)}
 :focus-visible{outline:2px solid var(--chinar);outline-offset:3px;border-radius:2px}
 p{margin:0}
 .mono{font-family:var(--font-mono);font-size:.76rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+button{font:inherit}
 
 /* Header */
-.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:.75rem 1.5rem;padding-block:1.5rem;border-bottom:1px solid var(--rule)}
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.75rem 1.5rem;padding-block:1.5rem;border-bottom:1px solid var(--rule)}
 .brand{font-family:var(--font-display);font-size:1.4rem;color:var(--ink);text-decoration:none}
-.top nav{display:flex;flex-wrap:wrap;gap:.35rem 1.4rem;font-family:var(--font-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
-.top nav a{color:var(--muted);text-decoration:none}
-.top nav a:hover{color:var(--ink)}
+.nav{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem 1.3rem;font-family:var(--font-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
+.nav a{color:var(--muted);text-decoration:none}
+.nav a:hover,.nav a[aria-current="page"]{color:var(--ink)}
+.theme-btn{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;padding:0;border:1px solid var(--rule);border-radius:50%;background:transparent;color:var(--muted);cursor:pointer}
+.theme-btn:hover{color:var(--ink);border-color:var(--ink)}
+.theme-btn svg{width:14px;height:14px;display:block}
 
-/* Hero */
-.hero{display:grid;grid-template-columns:minmax(0,1fr) 15.5rem;gap:2.5rem 4rem;align-items:end;padding-block:4.5rem 3.75rem}
+/* Hero (home) */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 15.5rem;gap:2.5rem 4rem;align-items:end;padding-block:4.5rem 3.75rem;position:relative}
 .hero-text{min-width:0}
 .hero h1{font-family:var(--font-display);font-weight:400;font-size:clamp(3.25rem,10vw,6.5rem);line-height:.95;letter-spacing:-.01em;margin:.9rem 0 1.4rem;text-wrap:balance}
 .lede{font-size:1.4rem;line-height:1.5;max-width:33rem;text-wrap:pretty}
-.penrose{margin:0;min-width:0;max-width:100%}
-.penrose svg{display:block;width:100%;height:auto}
-.penrose figcaption{margin-top:.6rem;font-family:var(--font-mono);font-size:.72rem;line-height:1.55;color:var(--muted)}
-.pd-frame path,.pd-sing{stroke:var(--ink);stroke-width:1.25;stroke-linejoin:round}
-.pd-horizon{stroke:var(--muted);stroke-width:1.15;stroke-dasharray:4 4}
-.pd-shell{stroke:var(--chinar);stroke-width:2.25;stroke-linecap:round}
-.pd-rays path{stroke:var(--pine);stroke-width:1.4;stroke-linecap:round}
-.pd-label text{font-family:var(--font-body);font-style:italic;font-size:16px;fill:var(--muted)}
+
+/* Page hero (inner pages) */
+.page-hero{padding-block:3.5rem 2.75rem}
+.page-hero h1{font-family:var(--font-display);font-weight:400;font-size:clamp(2.6rem,7vw,4.25rem);line-height:1;letter-spacing:-.005em;margin:.8rem 0 1.1rem;text-wrap:balance}
 
 /* Sections */
 .block{display:grid;grid-template-columns:13rem minmax(0,1fr);gap:1.25rem 3.5rem;padding-block:3.5rem;border-top:1px solid var(--rule)}
@@ -84,6 +85,61 @@ p{margin:0}
 .block-head h2{font-family:var(--font-display);font-weight:400;font-size:2.1rem;line-height:1.1;margin:.45rem 0 .7rem;text-wrap:balance}
 .note{font-size:.95rem;line-height:1.5;color:var(--muted);max-width:15rem}
 .block-body{min-width:0;max-width:36rem;display:flex;flex-direction:column;gap:1.1rem}
+.block-body.wide{max-width:44rem}
+.more{font-family:var(--font-mono);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase}
+.links-row{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}
+
+/* Lists of things (explore, notes, reading) */
+.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.items > li{display:flex;flex-direction:column;gap:.3rem;padding-block:1.1rem;border-bottom:1px solid var(--rule)}
+.items > li:first-child{padding-top:0}
+.items h3{font-family:var(--font-body);font-size:1.25rem;font-weight:500;line-height:1.3;margin:0}
+.items h3 a{color:var(--ink);text-decoration-color:var(--rule)}
+.items h3 a:hover{color:var(--pine);text-decoration-color:currentColor}
+.meta{font-family:var(--font-mono);font-size:.76rem;letter-spacing:.04em;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem 2rem;padding-block:2.25rem 3rem;border-top:1px solid var(--rule)}
+.foot .nav{gap:.35rem 1.1rem;font-size:.72rem}
+
+@media (max-width:780px){
+  .hero{grid-template-columns:minmax(0,1fr);padding-block:3rem 2.75rem;gap:2.25rem}
+  .block{grid-template-columns:minmax(0,1fr);padding-block:2.75rem;gap:1rem}
+  .note{max-width:28rem}
+  .page-hero{padding-block:2.75rem 2rem}
+}
+@media (max-width:480px){
+  body{font-size:1.125rem}
+  .lede{font-size:1.25rem}
+}
+
+/* Hawking pairs: the header's bottom rule plays the horizon. The canvas sits behind the header and hero only. */
+#pairs{position:absolute;top:0;left:0;width:100%;height:0;display:block;pointer-events:none;z-index:0}
+.top,main,.foot{position:relative;z-index:1}
+.horizon-note{position:absolute;top:.7rem;right:0;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;color:var(--muted)}
+
+/* Touchable Penrose diagram */
+.penrose{margin:0;min-width:0;max-width:100%}
+.penrose svg{display:block;width:100%;height:auto;-webkit-tap-highlight-color:transparent}
+.penrose figcaption{margin-top:.6rem;display:flex;flex-direction:column;gap:.5rem}
+.pd-info{font-size:.98rem;line-height:1.45;color:var(--ink);min-height:2.9em}
+.pd-cap{font-family:var(--font-mono);font-size:.72rem;line-height:1.55;color:var(--muted)}
+.pd-line{fill:none;stroke:var(--ink);stroke-width:1.25;stroke-linejoin:round;transition:stroke .2s,stroke-width .2s}
+.pd-horizon{stroke:var(--muted);stroke-width:1.15;stroke-dasharray:4 4}
+.pd-shell{stroke:var(--chinar);stroke-width:2.25;stroke-linecap:round}
+.pd-rays path{fill:none;stroke:var(--pine);stroke-width:1.4;stroke-linecap:round;transition:stroke-width .2s}
+.pd-region{fill:var(--pine);opacity:0;transition:opacity .2s}
+.pd-point{fill:var(--chinar);opacity:0;transition:opacity .2s}
+.pd-label text{font-family:var(--font-body);font-style:italic;font-size:16px;fill:var(--muted)}
+.pd-line.on{stroke:var(--chinar);stroke-width:2.6}
+.pd-shell.on{stroke:var(--pine);stroke-width:3}
+.pd-rays.on path{stroke-width:2.6}
+.pd-region.on{opacity:.13}
+.pd-point.on{opacity:1}
+.hit{fill:none;stroke:transparent;stroke-width:14;stroke-linecap:round;cursor:pointer;pointer-events:stroke}
+.hit-area{fill:transparent;stroke:none;cursor:pointer;pointer-events:all}
+.hit-dot{fill:transparent;cursor:pointer;pointer-events:all}
+.hit:focus,.hit-area:focus,.hit-dot:focus{outline:none}
+.hit:focus-visible,.hit-area:focus-visible,.hit-dot:focus-visible{outline:none}
 
 /* Journey as a worldline */
 .worldline{list-style:none;margin:0;padding:0;position:relative;display:flex;flex-direction:column;gap:2rem}
@@ -91,12 +147,15 @@ p{margin:0}
 .worldline li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:1.25rem;position:relative}
 .ev{display:block;width:28px;height:28px;margin-top:-.05rem}
 .ev svg{display:block;width:28px;height:28px;overflow:visible}
-.ev .cone{stroke:var(--muted);stroke-width:1.1;fill:none}
-.ev .dot{fill:var(--paper);stroke:var(--ink);stroke-width:1.5}
+.ev .cone{stroke:var(--muted);stroke-width:1.1;fill:none;transform-box:view-box;transform-origin:14px 14px;transition:transform .45s cubic-bezier(.2,.7,.2,1),stroke .3s}
+.ev .dot{fill:var(--paper);stroke:var(--ink);stroke-width:1.5;transition:fill .3s}
+.worldline li:hover .ev .cone,.worldline li:focus-within .ev .cone{transform:scale(1.7,1.25);stroke:var(--pine)}
+.worldline li:hover .ev .dot{fill:var(--pine)}
 .worldline li.now .ev .cone{stroke:var(--chinar);stroke-width:1.4}
 .worldline li.now .ev .dot{fill:var(--chinar);stroke:var(--chinar)}
 .worldline li.next .ev .dot{stroke-dasharray:2.5 2.5;stroke:var(--muted)}
 .worldline li.next .ev .cone{stroke-dasharray:2 3}
+@media (prefers-reduced-motion: reduce){.ev .cone,.ev .dot{transition:none}}
 .ev-text{min-width:0;display:flex;flex-direction:column;gap:.2rem}
 .when{font-family:var(--font-mono);font-size:.76rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums}
 .now .when{color:var(--chinar)}
@@ -121,9 +180,6 @@ p{margin:0}
 .tags{font-family:var(--font-mono);font-size:.8rem;line-height:1.9;color:var(--muted)}
 .tags span{white-space:nowrap}
 
-/* Placeholders the owner still has to fill in */
-.todo{font-family:var(--font-mono);font-size:.82rem;color:var(--muted);border:1px dashed var(--rule);border-radius:4px;padding:.6rem .8rem;align-self:flex-start}
-
 /* Contact */
 .contact-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem 1rem}
 .contact-row .mono{width:5.5rem}
@@ -133,56 +189,56 @@ a.addr{user-select:text}
 .contact-row button:hover{border-color:var(--ink)}
 .status{font-family:var(--font-mono);font-size:.78rem;color:var(--pine)}
 
-.foot{padding-block:2.25rem 3rem;border-top:1px solid var(--rule)}
-
-@media (max-width:780px){
-  .hero{grid-template-columns:minmax(0,1fr);padding-block:3rem 2.75rem;gap:2.25rem}
-  .penrose{max-width:15rem}
-  .block{grid-template-columns:minmax(0,1fr);padding-block:2.75rem;gap:1rem}
-  .note{max-width:28rem}
-}
-@media (max-width:480px){
-  body{font-size:1.125rem}
-  .lede{font-size:1.25rem}
-  .cares div{grid-template-columns:minmax(0,1fr);gap:.2rem}
-}
+@media (max-width:780px){ .penrose{max-width:16rem} }
+@media (max-width:480px){ .cares div{grid-template-columns:minmax(0,1fr);gap:.2rem} }
 </style>
 </head>
 <body>
+<canvas id="pairs" aria-hidden="true"></canvas>
 <header class="wrap top">
   <a class="brand" href="#top">Faizan Bari</a>
-  <nav aria-label="Sections">
-    <a href="#journey">Journey</a>
-    <a href="#research">Research</a>
-    <a href="#writing">Writing</a>
+  <nav class="nav" aria-label="Site">
+    <a href="#explore">Explore</a>
+    <a href="notes.html">Notes</a>
+    <a href="reading.html">Reading</a>
+    <a href="essays.html">Essays</a>
+    <a href="cv.html">CV</a>
     <a href="#contact">Contact</a>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Switch theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1.5 A6.5 6.5 0 0 1 8 14.5 Z" fill="currentColor"/></svg></button>
   </nav>
 </header>
 
 <main id="top">
   <section class="wrap hero" aria-labelledby="name">
+    <p class="horizon-note">Hawking pairs at the horizon line</p>
     <div class="hero-text">
       <p class="mono">Theoretical physics · IMSc, Chennai</p>
       <h1 id="name">Faizan Bari</h1>
       <p class="lede">I'm a Master's student in theoretical physics. I work on quantum gravity through general relativity and quantum field theory, mostly on black holes. I also write about growing up in Kashmir.</p>
     </div>
-    <figure class="penrose">
-      <svg viewBox="0 0 300 380" role="img" aria-labelledby="pd-title pd-desc">
-        <title id="pd-title">Penrose diagram of an evaporating black hole</title>
-        <desc id="pd-desc">A shell of matter collapses and forms a black hole. Its horizon ends where the black hole finishes evaporating, and Hawking radiation reaches future null infinity.</desc>
-        <g class="pd-frame" fill="none">
-          <path d="M70 350 L70 110"/>
-          <path d="M140 110 L140 40 L260 160 L70 350"/>
-        </g>
-        <polyline class="pd-sing" fill="none" points="70,110 75,106 80,114 85,106 90,114 95,106 100,114 105,106 110,114 115,106 120,114 125,106 130,114 135,106 140,110"/>
-        <path class="pd-horizon" fill="none" d="M140 110 L70 180"/>
-        <path class="pd-shell" fill="none" d="M190 230 L70 110"/>
-        <g class="pd-rays" fill="none">
+    <figure class="penrose" id="penrose">
+      <svg viewBox="0 0 300 380" role="group" aria-labelledby="pd-title">
+        <title id="pd-title">Penrose diagram of an evaporating black hole. Each part can be selected for an explanation.</title>
+        <polygon class="pd-region" data-part="flat" points="70,350 190,230 70,110"/>
+        <polygon class="pd-region" data-part="exterior" points="190,230 260,160 140,40 140,110 105,145"/>
+        <polygon class="pd-region" data-part="interior" points="70,110 140,110 70,180"/>
+        <path class="pd-line" data-part="r0lower" d="M70 350 L70 110"/>
+        <path class="pd-line" data-part="r0upper" d="M140 110 L140 40"/>
+        <path class="pd-line" data-part="scriplus" d="M140 40 L260 160"/>
+        <path class="pd-line" data-part="scriminus" d="M260 160 L70 350"/>
+        <polyline class="pd-line" data-part="singularity" points="70,110 75,106 80,114 85,106 90,114 95,106 100,114 105,106 110,114 115,106 120,114 125,106 130,114 135,106 140,110"/>
+        <path class="pd-line pd-horizon" data-part="horizon" d="M140 110 L70 180"/>
+        <path class="pd-line pd-shell" data-part="shell" d="M190 230 L70 110"/>
+        <g class="pd-rays" data-part="rays">
           <path d="M126 128 L177 77"/>
           <path d="M130 132 L181 81"/>
           <path d="M136 138 L187 87"/>
         </g>
-        <g class="pd-label">
+        <circle class="pd-point" data-part="iplus" cx="140" cy="40" r="3.5"/>
+        <circle class="pd-point" data-part="izero" cx="260" cy="160" r="3.5"/>
+        <circle class="pd-point" data-part="iminus" cx="70" cy="350" r="3.5"/>
+        <circle class="pd-point" data-part="endpoint" cx="140" cy="110" r="3.5"/>
+        <g class="pd-label" aria-hidden="true">
           <text x="140" y="27" text-anchor="middle">i⁺</text>
           <text x="268" y="166">i⁰</text>
           <text x="70" y="372" text-anchor="middle">i⁻</text>
@@ -190,8 +246,28 @@ a.addr{user-select:text}
           <text x="176" y="274">ℐ⁻</text>
           <text x="60" y="268" text-anchor="end">r = 0</text>
         </g>
+        <g class="hits">
+          <polygon class="hit-area" tabindex="0" role="button" data-key="flat" aria-label="Flat region inside the shell" points="70,350 190,230 70,110"/>
+          <polygon class="hit-area" tabindex="0" role="button" data-key="exterior" aria-label="Outside the black hole" points="190,230 260,160 140,40 140,110 105,145"/>
+          <polygon class="hit-area" tabindex="0" role="button" data-key="interior" aria-label="Inside the black hole" points="70,110 140,110 70,180"/>
+          <path class="hit" tabindex="0" role="button" data-key="scriminus" aria-label="Past null infinity" d="M260 160 L70 350"/>
+          <path class="hit" tabindex="0" role="button" data-key="scriplus" aria-label="Future null infinity" d="M140 40 L260 160"/>
+          <path class="hit" tabindex="0" role="button" data-key="r0lower" aria-label="The centre, before the black hole forms" d="M70 350 L70 112"/>
+          <path class="hit" tabindex="0" role="button" data-key="r0upper" aria-label="The centre, after evaporation" d="M140 104 L140 46"/>
+          <path class="hit" tabindex="0" role="button" data-key="shell" aria-label="Collapsing shell of matter" d="M188 228 L74 114"/>
+          <path class="hit" tabindex="0" role="button" data-key="horizon" aria-label="Event horizon" d="M136 114 L70 180"/>
+          <path class="hit" tabindex="0" role="button" data-key="singularity" aria-label="Singularity" d="M76 110 L134 110"/>
+          <polygon class="hit-area" tabindex="0" role="button" data-key="rays" aria-label="Hawking radiation" points="122,128 177,73 191,87 136,142"/>
+          <circle class="hit-dot" tabindex="0" role="button" data-key="iplus" aria-label="Future timelike infinity" cx="140" cy="38" r="11"/>
+          <circle class="hit-dot" tabindex="0" role="button" data-key="izero" aria-label="Spatial infinity" cx="262" cy="160" r="11"/>
+          <circle class="hit-dot" tabindex="0" role="button" data-key="iminus" aria-label="Past timelike infinity" cx="70" cy="352" r="11"/>
+          <circle class="hit-dot" tabindex="0" role="button" data-key="endpoint" aria-label="End of evaporation" cx="140" cy="110" r="8"/>
+        </g>
       </svg>
-      <figcaption>An evaporating black hole as a Penrose diagram. Matter (solid line) collapses, a horizon (dashed) forms, and Hawking radiation reaches ℐ⁺ until the hole is gone.</figcaption>
+      <figcaption>
+        <p class="pd-info" id="pd-info" aria-live="polite">Tap any part of the diagram to see what it is.</p>
+        <p class="pd-cap">An evaporating black hole as a Penrose diagram. Matter collapses, a horizon forms, and Hawking radiation reaches ℐ⁺ until the hole is gone.</p>
+      </figcaption>
     </figure>
   </section>
 
@@ -199,11 +275,11 @@ a.addr{user-select:text}
     <div class="block-head">
       <p class="mono">Worldline</p>
       <h2 id="journey-h">Journey</h2>
-      <p class="note">Time runs down the page. Each event's light cone opens toward its future.</p>
+      <p class="note">Time runs down the page. Each event's light cone opens toward its future. Hover over an event to open it wider.</p>
     </div>
     <div class="block-body">
       <ol class="worldline">
-        <li>
+        <li tabindex="0">
           <span class="ev" aria-hidden="true"><svg viewBox="0 0 28 28"><path class="cone" d="M14 14 L3 28 M14 14 L25 28"/><circle class="dot" cx="14" cy="14" r="4.5"/></svg></span>
           <div class="ev-text">
             <p class="when">Kashmir</p>
@@ -211,7 +287,7 @@ a.addr{user-select:text}
             <p>I grew up and went to school in Kashmir, where keeping up with my studies was often a struggle.</p>
           </div>
         </li>
-        <li>
+        <li tabindex="0">
           <span class="ev" aria-hidden="true"><svg viewBox="0 0 28 28"><path class="cone" d="M14 14 L3 28 M14 14 L25 28"/><circle class="dot" cx="14" cy="14" r="4.5"/></svg></span>
           <div class="ev-text">
             <p class="when">After school</p>
@@ -219,7 +295,7 @@ a.addr{user-select:text}
             <p>I took the SAT and was admitted to the University of Wisconsin–Madison for physics, and to two other US universities for engineering. I couldn't take up the offers.</p>
           </div>
         </li>
-        <li>
+        <li tabindex="0">
           <span class="ev" aria-hidden="true"><svg viewBox="0 0 28 28"><path class="cone" d="M14 14 L3 28 M14 14 L25 28"/><circle class="dot" cx="14" cy="14" r="4.5"/></svg></span>
           <div class="ev-text">
             <p class="when">2024</p>
@@ -227,7 +303,7 @@ a.addr{user-select:text}
             <p>Electronics and Communication Engineering. My thesis was on achievable rates of wireless channels in the finite block-length regime.</p>
           </div>
         </li>
-        <li>
+        <li tabindex="0">
           <span class="ev" aria-hidden="true"><svg viewBox="0 0 28 28"><path class="cone" d="M14 14 L3 28 M14 14 L25 28"/><circle class="dot" cx="14" cy="14" r="4.5"/></svg></span>
           <div class="ev-text">
             <p class="when">2024–25</p>
@@ -235,7 +311,7 @@ a.addr{user-select:text}
             <p>I took a year to teach myself physics, then cleared JEST (rank 170) and TIFR-GS, with offers from TIFR Hyderabad and IMSc.</p>
           </div>
         </li>
-        <li>
+        <li tabindex="0">
           <span class="ev" aria-hidden="true"><svg viewBox="0 0 28 28"><path class="cone" d="M14 14 L3 28 M14 14 L25 28"/><circle class="dot" cx="14" cy="14" r="4.5"/></svg></span>
           <div class="ev-text">
             <p class="when">2025</p>
@@ -243,7 +319,7 @@ a.addr{user-select:text}
             <p>I joined the Institute of Mathematical Sciences for a Master's in theoretical physics.</p>
           </div>
         </li>
-        <li class="now">
+        <li class="now" tabindex="0">
           <span class="ev" aria-hidden="true"><svg viewBox="0 0 28 28"><path class="cone" d="M14 14 L3 28 M14 14 L25 28"/><circle class="dot" cx="14" cy="14" r="4.5"/></svg></span>
           <div class="ev-text">
             <p class="when">2026 · now</p>
@@ -251,7 +327,7 @@ a.addr{user-select:text}
             <p>I started a research project on JT gravity coupled to a bath, to compute the Page curve.</p>
           </div>
         </li>
-        <li class="next">
+        <li class="next" tabindex="0">
           <span class="ev" aria-hidden="true"><svg viewBox="0 0 28 28"><path class="cone" d="M14 14 L3 28 M14 14 L25 28"/><circle class="dot" cx="14" cy="14" r="4.5"/></svg></span>
           <div class="ev-text">
             <p class="when">Next</p>
@@ -303,6 +379,31 @@ a.addr{user-select:text}
         <p><strong>JT gravity and the Page curve.</strong> JT gravity is a two-dimensional model of gravity, simple enough that many calculations can be done exactly. I couple it to matter and then to a bath that collects the radiation, and use it to compute the Page curve.</p>
       </div>
       <p class="tags"><span>Semiclassical gravity</span> · <span>QFT in curved spacetime</span> · <span>Black-hole thermodynamics</span> · <span>Canonical and covariant quantisation</span> · <span>JT gravity</span></p>
+      <p class="links-row more"><a href="notes.html">My notes</a><a href="reading.html">What I'm reading</a></p>
+    </div>
+  </section>
+
+  <section class="wrap block" id="explore" aria-labelledby="explore-h">
+    <div class="block-head">
+      <p class="mono">Interactive</p>
+      <h2 id="explore-h">Explore</h2>
+      <p class="note">Small pieces of physics you can play with.</p>
+    </div>
+    <div class="block-body">
+      <ul class="items">
+        <li>
+          <h3><a href="calculator.html">Black-hole calculator</a></h3>
+          <p>Type in any mass, from yourself to the Sun, and see the black hole it would make: its size, its temperature and how long it would take to evaporate.</p>
+        </li>
+        <li>
+          <h3><a href="page-curve.html">The Page curve</a></h3>
+          <p>Watch a black hole evaporate, and see where Hawking's calculation of the radiation's entropy has to give way.</p>
+        </li>
+        <li>
+          <h3><a href="#top">The Penrose diagram at the top</a></h3>
+          <p>Tap any part of it, from the singularity to ℐ⁺, for a one-line explanation.</p>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -313,7 +414,7 @@ a.addr{user-select:text}
     </div>
     <div class="block-body">
       <p>I write about my childhood and about life in Kashmir: school, family, the ordinary days and the hard ones. I also write about the long way I took into physics.</p>
-      <p class="mono">First essays coming soon</p>
+      <p class="more"><a href="essays.html">Essays</a></p>
     </div>
   </section>
 
@@ -334,19 +435,58 @@ a.addr{user-select:text}
         <span class="mono">LinkedIn</span>
         <a class="addr" href="https://www.linkedin.com/in/faizan-bari/" rel="me noopener">linkedin.com/in/faizan-bari</a>
       </div>
+      <div class="contact-row">
+        <span class="mono">CV</span>
+        <a class="addr" href="cv.html">Read my CV</a>
+      </div>
     </div>
   </section>
 </main>
 
 <footer class="wrap foot">
   <p class="mono">Faizan Bari · 2026</p>
+  <nav class="nav" aria-label="Footer">
+    <a href="#explore">Explore</a>
+    <a href="notes.html">Notes</a>
+    <a href="reading.html">Reading</a>
+    <a href="essays.html">Essays</a>
+    <a href="cv.html">CV</a>
+    <a href="#contact">Contact</a>
+  </nav>
 </footer>
-
 <script>
+
+/* Light/dark switch */
+(function(){
+  var root = document.documentElement, btn = document.getElementById('theme-btn');
+  if (!btn) return;
+  var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  function current(){
+    var t = root.getAttribute('data-theme');
+    if (t === 'dark' || t === 'light') return t;
+    return mq && mq.matches ? 'dark' : 'light';
+  }
+  function label(){
+    var text = current() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
+    btn.setAttribute('aria-label', text);
+    btn.title = text;
+  }
+  btn.addEventListener('click', function(){
+    var next = current() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    label();
+  });
+  if (mq && mq.addEventListener) mq.addEventListener('change', label);
+  label();
+})();
+
+/* Copy email */
 (function(){
   var btn = document.getElementById('copy-email');
   var addr = document.getElementById('email');
   var status = document.getElementById('copy-status');
+  if (!btn || !addr) return;
   var timer;
   function selectText(){
     try {
@@ -371,6 +511,201 @@ a.addr{user-select:text}
       show('Selected. Press Ctrl+C to copy.');
     }
   });
+})();
+
+/* Touchable Penrose diagram */
+(function(){
+  var fig = document.getElementById('penrose');
+  var info = document.getElementById('pd-info');
+  if (!fig || !info) return;
+  var TEXT = {
+    flat: 'Before the shell arrives, spacetime here is empty and flat.',
+    exterior: 'Outside the black hole: light sent from here can still escape to ℐ⁺.',
+    interior: 'Inside the black hole: every future-directed path ends on the singularity.',
+    singularity: 'The singularity, where curvature blows up and general relativity stops being reliable.',
+    horizon: 'The event horizon, the edge of the region that can never send a signal to ℐ⁺. It ends where the black hole finishes evaporating.',
+    shell: 'A shell of matter collapsing at the speed of light. Where it reaches r = 0, the singularity forms.',
+    rays: 'Hawking radiation: quanta created just outside the horizon that travel out to ℐ⁺.',
+    scriplus: 'ℐ⁺, future null infinity, where outgoing light rays end up.',
+    scriminus: 'ℐ⁻, past null infinity, where incoming light rays come from.',
+    r0lower: 'r = 0, the centre of the star, before the singularity forms.',
+    r0upper: 'r = 0 again, after the black hole has evaporated away.',
+    iplus: 'i⁺, future timelike infinity, where observers who stay outside end up.',
+    izero: 'i⁰, spatial infinity.',
+    iminus: 'i⁻, past timelike infinity, where every massive body starts.',
+    endpoint: 'The black hole finishes evaporating here, and the horizon ends.'
+  };
+  var current = null;
+  function select(key){
+    if (!TEXT[key]) return;
+    current = key;
+    fig.querySelectorAll('[data-part]').forEach(function(el){
+      el.classList.toggle('on', el.getAttribute('data-part') === key);
+    });
+    info.textContent = TEXT[key];
+  }
+  fig.querySelectorAll('[data-key]').forEach(function(el){
+    var key = el.getAttribute('data-key');
+    el.addEventListener('click', function(){ select(key); });
+    el.addEventListener('focus', function(){ select(key); });
+    el.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(key); }
+    });
+  });
+})();
+
+/* Hawking pairs. Pairs appear just outside the horizon (the header rule).
+   The outgoing partner (radiation) drifts away and fades; the infalling partner,
+   as an outside observer sees it, slows as it nears the horizon and redshifts away. */
+(function(){
+  var canvas = document.getElementById('pairs');
+  var header = document.querySelector('.top');
+  var hero = document.querySelector('.hero');
+  if (!canvas || !canvas.getContext || !header || !hero) return;
+  var ctx = canvas.getContext('2d');
+  var reduce = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  var col = { pine: '#2B5D51', chinar: '#A33F28' };
+  var W = 0, H = 0, lineY = 0, x0 = 0, x1 = 0, dpr = 1;
+  var parts = [], links = [];
+  var running = false, onScreen = true, last = 0, spawnIn = 0, raf = 0;
+  var FADE_OUT = 120, heroText = hero.querySelector('.hero-text');
+
+  function rand(a, b){ return a + Math.random() * (b - a); }
+  function readColors(){
+    var cs = getComputedStyle(document.documentElement);
+    col.pine = cs.getPropertyValue('--pine').trim() || col.pine;
+    col.chinar = cs.getPropertyValue('--chinar').trim() || col.chinar;
+  }
+  function layout(){
+    var b = document.body.getBoundingClientRect();
+    var h = header.getBoundingClientRect();
+    var r = hero.getBoundingClientRect();
+    W = b.width;
+    H = Math.max(0, r.bottom - b.top);
+    lineY = h.bottom - b.top;
+    x0 = h.left - b.left;
+    x1 = h.right - b.left;
+    FADE_OUT = heroText ? Math.max(36, Math.min(120, heroText.getBoundingClientRect().top - h.bottom - 8)) : 120;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.style.height = H + 'px';
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function interval(){
+    var span = Math.max(200, x1 - x0);
+    return rand(0.45, 0.9) * Math.min(2.2, Math.max(0.6, 900 / span));
+  }
+  function spawn(){
+    var x = rand(x0 + 16, x1 - 16), y = lineY + rand(7, 13), kick = rand(6, 12);
+    var out = { x: x + 1.5, y: y, vx: kick * 0.5 + rand(-4, 4), vy: rand(14, 24), out: true, age: 0, life: rand(5, 8) };
+    var inn = { x: x - 1.5, y: y, vx: -kick * 0.5 + rand(-4, 4), out: false, age: 0, life: 4 };
+    parts.push(out, inn);
+    links.push({ a: out, b: inn, age: 0, life: 1.4 });
+  }
+  function update(dt){
+    for (var i = parts.length - 1; i >= 0; i--){
+      var p = parts[i];
+      p.age += dt;
+      if (p.out){
+        p.vx *= (1 - 0.4 * dt);
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+        if (p.age > p.life || p.y - lineY > FADE_OUT) parts.splice(i, 1);
+      } else {
+        p.vx *= (1 - 1.5 * dt);
+        p.x += p.vx * dt;
+        p.y = lineY + (p.y - lineY) * Math.exp(-1.2 * dt);
+        if (p.age > p.life) parts.splice(i, 1);
+      }
+    }
+    for (var j = links.length - 1; j >= 0; j--){
+      links[j].age += dt;
+      if (links[j].age > links[j].life) links.splice(j, 1);
+    }
+  }
+  function alphaOf(p){
+    var born = Math.min(1, p.age / 0.3);
+    if (p.out) return born * Math.max(0, 1 - (p.y - lineY) / FADE_OUT) * 0.8;
+    return born * Math.exp(-p.age / 1.2) * 0.8;
+  }
+  function draw(){
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineWidth = 1;
+    for (var j = 0; j < links.length; j++){
+      var l = links[j];
+      var k = 1 - l.age / l.life;
+      ctx.globalAlpha = 0.45 * k * Math.min(alphaOf(l.a), alphaOf(l.b)) / 0.8;
+      ctx.strokeStyle = col.pine;
+      ctx.beginPath();
+      ctx.moveTo(l.a.x, l.a.y);
+      ctx.lineTo(l.b.x, l.b.y);
+      ctx.stroke();
+    }
+    for (var i = 0; i < parts.length; i++){
+      var p = parts[i];
+      ctx.globalAlpha = alphaOf(p);
+      ctx.fillStyle = p.out ? col.pine : col.chinar;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.out ? 1.9 : 1.6, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+  function seed(seconds){
+    for (var t = 0; t < seconds; t += 0.05){
+      spawnIn -= 0.05;
+      if (spawnIn <= 0){ spawn(); spawnIn = interval(); }
+      update(0.05);
+    }
+  }
+  function frame(t){
+    if (!running) return;
+    var dt = Math.min(0.05, Math.max(0, (t - last) / 1000));
+    last = t;
+    spawnIn -= dt;
+    if (spawnIn <= 0){ spawn(); spawnIn = interval(); }
+    update(dt);
+    draw();
+    raf = requestAnimationFrame(frame);
+  }
+  function shouldRun(){ return !reduce.matches && onScreen && !document.hidden; }
+  function sync(){
+    if (shouldRun() && !running){
+      running = true;
+      last = performance.now();
+      raf = requestAnimationFrame(frame);
+    } else if (!shouldRun() && running){
+      running = false;
+      cancelAnimationFrame(raf);
+      draw();
+    }
+  }
+  function refresh(){ layout(); draw(); }
+
+  readColors();
+  layout();
+  seed(6);
+  draw();
+  sync();
+
+  if ('IntersectionObserver' in window){
+    new IntersectionObserver(function(entries){ onScreen = entries[0].isIntersecting; sync(); }).observe(hero);
+  }
+  document.addEventListener('visibilitychange', sync);
+  if (reduce.addEventListener) reduce.addEventListener('change', sync);
+  if (window.ResizeObserver){
+    var ro = new ResizeObserver(refresh);
+    ro.observe(header);
+    ro.observe(hero);
+  } else {
+    window.addEventListener('resize', refresh);
+  }
+  var dark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  if (dark && dark.addEventListener) dark.addEventListener('change', function(){ readColors(); draw(); });
+  if (window.MutationObserver){
+    new MutationObserver(function(){ readColors(); draw(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  }
 })();
 </script>
 </body>

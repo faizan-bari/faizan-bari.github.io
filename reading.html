@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>What I’m reading | Faizan Bari</title>
+<meta name="description" content="Papers on black holes, JT gravity and algebras in gravity, with a line on each.">
+<meta property="og:title" content="What I’m reading | Faizan Bari">
+<meta property="og:description" content="Papers on black holes, JT gravity and algebras in gravity, with a line on each.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 15 L5 30 M16 15 L27 30' stroke='%232B5D51' stroke-width='2.2' fill='none'/%3E%3Ccircle cx='16' cy='13' r='6' fill='%23A33F28'/%3E%3C/svg%3E">
+<script>try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
+<style>
+/* Layout: one reading column; on wide screens each section's name sits in a left margin column. The journey is drawn as a worldline, each event with its future light cone. */
+:root{
+  --paper:#F3F5F2;
+  --surface:#E7ECE8;
+  --ink:#16202A;
+  --muted:#56616B;
+  --rule:#D2D9D5;
+  --pine:#2B5D51;
+  --chinar:#A33F28;
+  --font-display:"Gloock","Iowan Old Style",Georgia,serif;
+  --font-body:"Newsreader","Iowan Old Style",Georgia,serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F151B; --surface:#17202A; --ink:#E4E9E6; --muted:#9AA5A2; --rule:#2A333C; --pine:#86BEAD; --chinar:#E3825F; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F151B; --surface:#17202A; --ink:#E4E9E6; --muted:#9AA5A2; --rule:#2A333C; --pine:#86BEAD; --chinar:#E3825F; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:1.1875rem;
+  line-height:1.65;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  position:relative;
+}
+.wrap{max-width:66rem;margin:0 auto}
+a{color:var(--pine);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--chinar)}
+:focus-visible{outline:2px solid var(--chinar);outline-offset:3px;border-radius:2px}
+p{margin:0}
+.mono{font-family:var(--font-mono);font-size:.76rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+button{font:inherit}
+
+/* Header */
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.75rem 1.5rem;padding-block:1.5rem;border-bottom:1px solid var(--rule)}
+.brand{font-family:var(--font-display);font-size:1.4rem;color:var(--ink);text-decoration:none}
+.nav{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem 1.3rem;font-family:var(--font-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
+.nav a{color:var(--muted);text-decoration:none}
+.nav a:hover,.nav a[aria-current="page"]{color:var(--ink)}
+.theme-btn{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;padding:0;border:1px solid var(--rule);border-radius:50%;background:transparent;color:var(--muted);cursor:pointer}
+.theme-btn:hover{color:var(--ink);border-color:var(--ink)}
+.theme-btn svg{width:14px;height:14px;display:block}
+
+/* Hero (home) */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 15.5rem;gap:2.5rem 4rem;align-items:end;padding-block:4.5rem 3.75rem;position:relative}
+.hero-text{min-width:0}
+.hero h1{font-family:var(--font-display);font-weight:400;font-size:clamp(3.25rem,10vw,6.5rem);line-height:.95;letter-spacing:-.01em;margin:.9rem 0 1.4rem;text-wrap:balance}
+.lede{font-size:1.4rem;line-height:1.5;max-width:33rem;text-wrap:pretty}
+
+/* Page hero (inner pages) */
+.page-hero{padding-block:3.5rem 2.75rem}
+.page-hero h1{font-family:var(--font-display);font-weight:400;font-size:clamp(2.6rem,7vw,4.25rem);line-height:1;letter-spacing:-.005em;margin:.8rem 0 1.1rem;text-wrap:balance}
+
+/* Sections */
+.block{display:grid;grid-template-columns:13rem minmax(0,1fr);gap:1.25rem 3.5rem;padding-block:3.5rem;border-top:1px solid var(--rule)}
+.block-head{min-width:0}
+.block-head h2{font-family:var(--font-display);font-weight:400;font-size:2.1rem;line-height:1.1;margin:.45rem 0 .7rem;text-wrap:balance}
+.note{font-size:.95rem;line-height:1.5;color:var(--muted);max-width:15rem}
+.block-body{min-width:0;max-width:36rem;display:flex;flex-direction:column;gap:1.1rem}
+.block-body.wide{max-width:44rem}
+.more{font-family:var(--font-mono);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase}
+.links-row{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}
+
+/* Lists of things (explore, notes, reading) */
+.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.items > li{display:flex;flex-direction:column;gap:.3rem;padding-block:1.1rem;border-bottom:1px solid var(--rule)}
+.items > li:first-child{padding-top:0}
+.items h3{font-family:var(--font-body);font-size:1.25rem;font-weight:500;line-height:1.3;margin:0}
+.items h3 a{color:var(--ink);text-decoration-color:var(--rule)}
+.items h3 a:hover{color:var(--pine);text-decoration-color:currentColor}
+.meta{font-family:var(--font-mono);font-size:.76rem;letter-spacing:.04em;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem 2rem;padding-block:2.25rem 3rem;border-top:1px solid var(--rule)}
+.foot .nav{gap:.35rem 1.1rem;font-size:.72rem}
+
+@media (max-width:780px){
+  .hero{grid-template-columns:minmax(0,1fr);padding-block:3rem 2.75rem;gap:2.25rem}
+  .block{grid-template-columns:minmax(0,1fr);padding-block:2.75rem;gap:1rem}
+  .note{max-width:28rem}
+  .page-hero{padding-block:2.75rem 2rem}
+}
+@media (max-width:480px){
+  body{font-size:1.125rem}
+  .lede{font-size:1.25rem}
+}
+
+.items .by{font-size:.98rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<header class="wrap top">
+  <a class="brand" href="index.html">Faizan Bari</a>
+  <nav class="nav" aria-label="Site">
+    <a href="index.html#explore">Explore</a>
+    <a href="notes.html">Notes</a>
+    <a href="reading.html" aria-current="page">Reading</a>
+    <a href="essays.html">Essays</a>
+    <a href="cv.html">CV</a>
+    <a href="index.html#contact">Contact</a>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Switch theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1.5 A6.5 6.5 0 0 1 8 14.5 Z" fill="currentColor"/></svg></button>
+  </nav>
+</header>
+
+<main>
+  <section class="wrap page-hero" aria-labelledby="ph">
+    <p class="mono">Reading</p>
+    <h1 id="ph">What I'm reading</h1>
+    <p class="lede">A few papers I keep coming back to, with a line on each.</p>
+  </section>
+
+  <section class="wrap block" aria-labelledby="r1-h">
+    <div class="block-head">
+      <p class="mono">Where it starts</p>
+      <h2 id="r1-h">Black holes and thermodynamics</h2>
+    </div>
+    <div class="block-body wide">
+      <ul class="items">
+        <li>
+          <p class="meta">1975 · Commun. Math. Phys. 43, 199</p>
+          <h3>Particle creation by black holes</h3>
+          <p class="by">S. W. Hawking</p>
+          <p>Where it all starts: a quantum field on the background of a collapsing star ends up in a thermal state at late times.</p>
+        </li>
+        <li>
+          <p class="meta">2001 · <a href="https://arxiv.org/abs/gr-qc/9912119">arXiv:gr-qc/9912119</a></p>
+          <h3><a href="https://arxiv.org/abs/gr-qc/9912119">The thermodynamics of black holes</a></h3>
+          <p class="by">R. M. Wald</p>
+          <p>A careful review of black-hole thermodynamics, from the four laws to the generalised second law.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap block" aria-labelledby="r2-h">
+    <div class="block-head">
+      <p class="mono">Two dimensions</p>
+      <h2 id="r2-h">JT gravity and the Page curve</h2>
+    </div>
+    <div class="block-body wide">
+      <ul class="items">
+        <li>
+          <p class="meta">2022 · <a href="https://arxiv.org/abs/2210.10846">arXiv:2210.10846</a></p>
+          <h3><a href="https://arxiv.org/abs/2210.10846">Solvable models of quantum black holes: a review on Jackiw–Teitelboim gravity</a></h3>
+          <p class="by">T. G. Mertens, G. J. Turiaci</p>
+          <p>Where JT gravity comes from, its classical solutions, the Schwarzian, and how to quantise it exactly.</p>
+        </li>
+        <li>
+          <p class="meta">2018 · <a href="https://arxiv.org/abs/1804.01081">arXiv:1804.01081</a></p>
+          <h3><a href="https://arxiv.org/abs/1804.01081">The factorization problem in Jackiw–Teitelboim gravity</a></h3>
+          <p class="by">D. Harlow, D. Jafferis</p>
+          <p>Quantises pure JT gravity by hand and finds that its Hilbert space does not split into a left and a right part.</p>
+        </li>
+        <li>
+          <p class="meta">2019 · <a href="https://arxiv.org/abs/1908.10996">arXiv:1908.10996</a></p>
+          <h3><a href="https://arxiv.org/abs/1908.10996">The Page curve of Hawking radiation from semiclassical geometry</a></h3>
+          <p class="by">A. Almheiri, R. Mahajan, J. Maldacena, Y. Zhao</p>
+          <p>Computes the Page curve of a JT black hole evaporating into a bath, using quantum extremal surfaces.</p>
+        </li>
+        <li>
+          <p class="meta">2020 · <a href="https://arxiv.org/abs/2006.06872">arXiv:2006.06872</a></p>
+          <h3><a href="https://arxiv.org/abs/2006.06872">The entropy of Hawking radiation</a></h3>
+          <p class="by">A. Almheiri, T. Hartman, J. Maldacena, E. Shaghoulian, A. Tajdini</p>
+          <p>The standard review of how the semiclassical gravitational path integral, through islands, gives the Page curve.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap block" aria-labelledby="r3-h">
+    <div class="block-head">
+      <p class="mono">Observables</p>
+      <h2 id="r3-h">Algebras in gravity</h2>
+    </div>
+    <div class="block-body wide">
+      <ul class="items">
+        <li>
+          <p class="meta">2023 · <a href="https://arxiv.org/abs/2301.07257">arXiv:2301.07257</a></p>
+          <h3><a href="https://arxiv.org/abs/2301.07257">Algebras and states in JT gravity</a></h3>
+          <p class="by">G. Penington, E. Witten</p>
+          <p>Builds the algebra of observables of JT gravity with matter and shows that its entropy is the generalised entropy. The paper my current project starts from.</p>
+        </li>
+        <li>
+          <p class="meta">2021 · <a href="https://arxiv.org/abs/2112.12828">arXiv:2112.12828</a></p>
+          <h3><a href="https://arxiv.org/abs/2112.12828">Gravity and the crossed product</a></h3>
+          <p class="by">E. Witten</p>
+          <p>How coupling to gravity turns the Type III algebra of a quantum field into a Type II algebra, which has a trace and so a well-defined entropy.</p>
+        </li>
+        <li>
+          <p class="meta">2023 · <a href="https://arxiv.org/abs/2302.01958">arXiv:2302.01958</a></p>
+          <h3><a href="https://arxiv.org/abs/2302.01958">Notes on the type classification of von Neumann algebras</a></h3>
+          <p class="by">J. Sorce</p>
+          <p>A physicist's guide to what Type I, II and III von Neumann algebras are, and why the differences matter.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p class="mono">Faizan Bari · 2026</p>
+  <nav class="nav" aria-label="Footer">
+    <a href="index.html#explore">Explore</a>
+    <a href="notes.html">Notes</a>
+    <a href="reading.html">Reading</a>
+    <a href="essays.html">Essays</a>
+    <a href="cv.html">CV</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</footer>
+<script>
+
+/* Light/dark switch */
+(function(){
+  var root = document.documentElement, btn = document.getElementById('theme-btn');
+  if (!btn) return;
+  var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  function current(){
+    var t = root.getAttribute('data-theme');
+    if (t === 'dark' || t === 'light') return t;
+    return mq && mq.matches ? 'dark' : 'light';
+  }
+  function label(){
+    var text = current() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
+    btn.setAttribute('aria-label', text);
+    btn.title = text;
+  }
+  btn.addEventListener('click', function(){
+    var next = current() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    label();
+  });
+  if (mq && mq.addEventListener) mq.addEventListener('change', label);
+  label();
+})();
+
+</script>
+</body>
+</html>
