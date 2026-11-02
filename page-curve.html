@@ -101,6 +101,12 @@ button{font:inherit}
 .foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem 2rem;padding-block:2.25rem 3rem;border-top:1px solid var(--rule)}
 .foot .nav{gap:.35rem 1.1rem;font-size:.72rem}
 
+/* Hidden evaporation */
+.egg-canvas{position:fixed;inset:0;z-index:60;pointer-events:none}
+.egg-toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom, 0px));transform:translate(-50%,12px);opacity:0;transition:opacity .4s ease,transform .4s ease;background:var(--ink);color:var(--paper);font-family:var(--font-mono);font-size:.8rem;line-height:1.5;padding:.75rem 1rem;border-radius:4px;z-index:61;width:max-content;max-width:calc(100vw - 32px)}
+.egg-toast.on{opacity:1;transform:translate(-50%,0)}
+.sig{cursor:default;user-select:none}
+
 @media (max-width:780px){
   .hero{grid-template-columns:minmax(0,1fr);padding-block:3rem 2.75rem;gap:2.25rem}
   .block{grid-template-columns:minmax(0,1fr);padding-block:2.75rem;gap:1rem}
@@ -152,6 +158,7 @@ button{font:inherit}
   <a class="brand" href="index.html">Faizan Bari</a>
   <nav class="nav" aria-label="Site">
     <a href="index.html#explore">Explore</a>
+    <a href="now.html">Now</a>
     <a href="notes.html">Notes</a>
     <a href="reading.html">Reading</a>
     <a href="essays.html">Essays</a>
@@ -235,9 +242,10 @@ button{font:inherit}
 </main>
 
 <footer class="wrap foot">
-  <p class="mono">Faizan Bari · 2026</p>
+  <p class="mono sig">Faizan Bari · 2026</p>
   <nav class="nav" aria-label="Footer">
     <a href="index.html#explore">Explore</a>
+    <a href="now.html">Now</a>
     <a href="notes.html">Notes</a>
     <a href="reading.html">Reading</a>
     <a href="essays.html">Essays</a>
@@ -270,6 +278,81 @@ button{font:inherit}
   });
   if (mq && mq.addEventListener) mq.addEventListener('change', label);
   label();
+})();
+
+/* Hidden: type "hawking" anywhere (or tap the footer signature seven times) and the page evaporates, then comes back. */
+(function(){
+  var buf = '', busy = false, taps = 0, tapTimer = 0;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.addEventListener('keydown', function(e){
+    var tag = e.target && e.target.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (!e.key || e.key.length !== 1) return;
+    buf = (buf + e.key.toLowerCase()).slice(-7);
+    if (buf === 'hawking'){ buf = ''; evaporate(); }
+  });
+  var sig = document.querySelector('.foot .sig');
+  if (sig) sig.addEventListener('click', function(){
+    taps++; clearTimeout(tapTimer);
+    tapTimer = setTimeout(function(){ taps = 0; }, 2500);
+    if (taps >= 7){ taps = 0; evaporate(); }
+  });
+  function toast(msg){
+    var t = document.createElement('div');
+    t.className = 'egg-toast'; t.setAttribute('role', 'status'); t.textContent = msg;
+    document.body.appendChild(t);
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ t.classList.add('on'); }); });
+    setTimeout(function(){ t.classList.remove('on'); setTimeout(function(){ if (t.parentNode) t.parentNode.removeChild(t); }, 600); }, 4500);
+  }
+  var MSG = 'Evaporated, then restored. If evaporation is unitary, no information is lost.';
+  function evaporate(){
+    if (busy) return; busy = true;
+    var parts = Array.prototype.slice.call(document.querySelectorAll('header.top, main, footer.foot, #pairs'));
+    function restore(){ parts.forEach(function(p){ p.style.opacity = ''; p.style.filter = ''; }); }
+    if (reduce){
+      parts.forEach(function(p){ p.style.transition = 'opacity .3s'; p.style.opacity = '0.15'; });
+      setTimeout(function(){ restore(); busy = false; toast(MSG); }, 700);
+      return;
+    }
+    var cs = getComputedStyle(document.documentElement);
+    var cols = ['--ink', '--pine', '--chinar'].map(function(k){ return cs.getPropertyValue(k).trim(); });
+    var W = window.innerWidth, H = window.innerHeight, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var cv = document.createElement('canvas');
+    cv.className = 'egg-canvas'; cv.setAttribute('aria-hidden', 'true');
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    document.body.appendChild(cv);
+    var ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var blocks = Array.prototype.slice.call(document.querySelectorAll('h1, h2, h3, p, li, dt, dd, .brand, .nav a'))
+      .map(function(e){ return e.getBoundingClientRect(); })
+      .filter(function(r){ return r.width > 4 && r.height > 4 && r.bottom > 0 && r.top < H && r.right > 0 && r.left < W; });
+    if (!blocks.length) blocks = [{ left: 0, top: 0, width: W, height: H }];
+    var N = Math.min(420, Math.max(160, Math.round(W * H / 2600))), ps = [];
+    for (var i = 0; i < N; i++){
+      var b = blocks[(Math.random() * blocks.length) | 0];
+      var x = b.left + Math.random() * b.width, y = b.top + Math.random() * b.height;
+      var ang = Math.random() * Math.PI * 2, sp = 60 + Math.random() * 200;
+      ps.push({ x0: x, y0: y, x: x, y: y, dx: Math.cos(ang) * sp, dy: Math.sin(ang) * sp - 90, c: cols[(Math.random() * 3) | 0], r: 1 + Math.random() * 1.6 });
+    }
+    parts.forEach(function(p){ p.style.transition = 'opacity .8s ease, filter .8s ease'; p.style.opacity = '0'; p.style.filter = 'blur(4px)'; });
+    var t0 = performance.now(), OUT = 1.7, HOLD = 0.5, BACK = 1.6, shown = false;
+    function ease(k){ return k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
+    function frame(now){
+      var t = (now - t0) / 1000, end = OUT + HOLD + BACK;
+      ctx.clearRect(0, 0, W, H);
+      var alpha = t > end ? Math.max(0, 1 - (t - end) / 0.4) : 0.85;
+      ps.forEach(function(p){
+        if (t < OUT){ var k = t / OUT, e = 1 - (1 - k) * (1 - k); p.x = p.x0 + p.dx * e; p.y = p.y0 + p.dy * e; p.xe = p.x; p.ye = p.y; }
+        else if (t >= OUT + HOLD){ var u = Math.min(1, (t - OUT - HOLD) / BACK), f = ease(u); p.x = p.xe + (p.x0 - p.xe) * f; p.y = p.ye + (p.y0 - p.ye) * f; }
+        ctx.globalAlpha = alpha; ctx.fillStyle = p.c;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+      });
+      if (!shown && t >= OUT + HOLD + BACK * 0.6){ shown = true; restore(); }
+      if (t < end + 0.4) requestAnimationFrame(frame);
+      else { if (cv.parentNode) cv.parentNode.removeChild(cv); busy = false; toast(MSG); }
+    }
+    requestAnimationFrame(frame);
+  }
 })();
 
 (function(){

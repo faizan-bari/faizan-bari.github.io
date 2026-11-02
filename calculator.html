@@ -101,6 +101,12 @@ button{font:inherit}
 .foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem 2rem;padding-block:2.25rem 3rem;border-top:1px solid var(--rule)}
 .foot .nav{gap:.35rem 1.1rem;font-size:.72rem}
 
+/* Hidden evaporation */
+.egg-canvas{position:fixed;inset:0;z-index:60;pointer-events:none}
+.egg-toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom, 0px));transform:translate(-50%,12px);opacity:0;transition:opacity .4s ease,transform .4s ease;background:var(--ink);color:var(--paper);font-family:var(--font-mono);font-size:.8rem;line-height:1.5;padding:.75rem 1rem;border-radius:4px;z-index:61;width:max-content;max-width:calc(100vw - 32px)}
+.egg-toast.on{opacity:1;transform:translate(-50%,0)}
+.sig{cursor:default;user-select:none}
+
 @media (max-width:780px){
   .hero{grid-template-columns:minmax(0,1fr);padding-block:3rem 2.75rem;gap:2.25rem}
   .block{grid-template-columns:minmax(0,1fr);padding-block:2.75rem;gap:1rem}
@@ -122,7 +128,10 @@ button{font:inherit}
 .presets button:hover{border-color:var(--ink)}
 .presets button[aria-pressed="true"]{border-color:var(--pine);color:var(--pine);background:var(--surface)}
 .error{color:var(--chinar);font-size:.95rem;min-height:1.5em}
-.results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,12.5rem),1fr));gap:1rem}
+.results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:1rem}
+.glow{display:flex;align-items:center;gap:.65rem}
+.swatch{width:1.35rem;height:1.35rem;border-radius:50%;flex:none;border:1px dashed var(--muted);background:transparent}
+.swatch.lit{border:1px solid var(--rule)}
 .result{background:var(--surface);border-radius:4px;padding:1.1rem 1.2rem 1.25rem;display:flex;flex-direction:column;gap:.4rem;min-width:0}
 .result .value{font-family:var(--font-display);font-size:1.6rem;line-height:1.2;font-variant-numeric:tabular-nums}
 .result .sub{font-family:var(--font-mono);font-size:.78rem;color:var(--muted);overflow-wrap:anywhere}
@@ -143,6 +152,7 @@ button{font:inherit}
   <a class="brand" href="index.html">Faizan Bari</a>
   <nav class="nav" aria-label="Site">
     <a href="index.html#explore">Explore</a>
+    <a href="now.html">Now</a>
     <a href="notes.html">Notes</a>
     <a href="reading.html">Reading</a>
     <a href="essays.html">Essays</a>
@@ -182,6 +192,7 @@ button{font:inherit}
         <button type="button" data-v="70" data-u="1" aria-pressed="true">A person</button>
         <button type="button" data-v="7.342e22" data-u="1" aria-pressed="false">The Moon</button>
         <button type="button" data-v="1" data-u="5.9722e24" aria-pressed="false">The Earth</button>
+        <button type="button" data-v="2.1e19" data-u="1" aria-pressed="false">Glows like the Sun</button>
         <button type="button" data-v="1" data-u="1.98847e30" aria-pressed="false">The Sun</button>
         <button type="button" data-v="4.3e6" data-u="1.98847e30" aria-pressed="false">Sagittarius A*</button>
         <button type="button" data-v="6.5e9" data-u="1.98847e30" aria-pressed="false">M87*</button>
@@ -206,6 +217,12 @@ button{font:inherit}
           <p class="sub" id="e-sub"></p>
           <p class="say" id="e-say"></p>
         </div>
+        <div class="result">
+          <p class="mono">Glow</p>
+          <p class="value glow"><span class="swatch" id="g-sw" aria-hidden="true"></span><span id="g-val">Gamma rays</span></p>
+          <p class="sub" id="g-sub"></p>
+          <p class="say" id="g-say"></p>
+        </div>
       </div>
       <p class="warn" id="calc-warn"></p>
     </div>
@@ -223,6 +240,7 @@ button{font:inherit}
         <li><span class="mono">Lifetime</span><span class="f">t<sub>ev</sub> ≈ 5120π G²M³ / ħc⁴</span></li>
       </ul>
       <p>The radius grows in proportion to the mass, but the temperature falls as the mass grows: big black holes are cold and small ones are hot. A hotter black hole radiates faster, so the lifetime grows like the cube of the mass.</p>
+      <p>The glow uses Wien's law: a body at temperature T radiates most strongly at the wavelength λ = b/T, with b = 2.898 mm K. A real black hole's spectrum is only roughly a blackbody, so the colour is a guide.</p>
       <p>The lifetime is a textbook estimate. It treats the black hole as a perfect blackbody that radiates only light, and it ignores the cosmic microwave background, so read it as an order of magnitude.</p>
       <p class="consts">G = 6.674 × 10⁻¹¹ m³ kg⁻¹ s⁻² · c = 2.998 × 10⁸ m/s · ħ = 1.055 × 10⁻³⁴ J s · k<sub>B</sub> = 1.381 × 10⁻²³ J/K</p>
     </div>
@@ -230,9 +248,10 @@ button{font:inherit}
 </main>
 
 <footer class="wrap foot">
-  <p class="mono">Faizan Bari · 2026</p>
+  <p class="mono sig">Faizan Bari · 2026</p>
   <nav class="nav" aria-label="Footer">
     <a href="index.html#explore">Explore</a>
+    <a href="now.html">Now</a>
     <a href="notes.html">Notes</a>
     <a href="reading.html">Reading</a>
     <a href="essays.html">Essays</a>
@@ -267,6 +286,81 @@ button{font:inherit}
   label();
 })();
 
+/* Hidden: type "hawking" anywhere (or tap the footer signature seven times) and the page evaporates, then comes back. */
+(function(){
+  var buf = '', busy = false, taps = 0, tapTimer = 0;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.addEventListener('keydown', function(e){
+    var tag = e.target && e.target.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (!e.key || e.key.length !== 1) return;
+    buf = (buf + e.key.toLowerCase()).slice(-7);
+    if (buf === 'hawking'){ buf = ''; evaporate(); }
+  });
+  var sig = document.querySelector('.foot .sig');
+  if (sig) sig.addEventListener('click', function(){
+    taps++; clearTimeout(tapTimer);
+    tapTimer = setTimeout(function(){ taps = 0; }, 2500);
+    if (taps >= 7){ taps = 0; evaporate(); }
+  });
+  function toast(msg){
+    var t = document.createElement('div');
+    t.className = 'egg-toast'; t.setAttribute('role', 'status'); t.textContent = msg;
+    document.body.appendChild(t);
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ t.classList.add('on'); }); });
+    setTimeout(function(){ t.classList.remove('on'); setTimeout(function(){ if (t.parentNode) t.parentNode.removeChild(t); }, 600); }, 4500);
+  }
+  var MSG = 'Evaporated, then restored. If evaporation is unitary, no information is lost.';
+  function evaporate(){
+    if (busy) return; busy = true;
+    var parts = Array.prototype.slice.call(document.querySelectorAll('header.top, main, footer.foot, #pairs'));
+    function restore(){ parts.forEach(function(p){ p.style.opacity = ''; p.style.filter = ''; }); }
+    if (reduce){
+      parts.forEach(function(p){ p.style.transition = 'opacity .3s'; p.style.opacity = '0.15'; });
+      setTimeout(function(){ restore(); busy = false; toast(MSG); }, 700);
+      return;
+    }
+    var cs = getComputedStyle(document.documentElement);
+    var cols = ['--ink', '--pine', '--chinar'].map(function(k){ return cs.getPropertyValue(k).trim(); });
+    var W = window.innerWidth, H = window.innerHeight, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var cv = document.createElement('canvas');
+    cv.className = 'egg-canvas'; cv.setAttribute('aria-hidden', 'true');
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    document.body.appendChild(cv);
+    var ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var blocks = Array.prototype.slice.call(document.querySelectorAll('h1, h2, h3, p, li, dt, dd, .brand, .nav a'))
+      .map(function(e){ return e.getBoundingClientRect(); })
+      .filter(function(r){ return r.width > 4 && r.height > 4 && r.bottom > 0 && r.top < H && r.right > 0 && r.left < W; });
+    if (!blocks.length) blocks = [{ left: 0, top: 0, width: W, height: H }];
+    var N = Math.min(420, Math.max(160, Math.round(W * H / 2600))), ps = [];
+    for (var i = 0; i < N; i++){
+      var b = blocks[(Math.random() * blocks.length) | 0];
+      var x = b.left + Math.random() * b.width, y = b.top + Math.random() * b.height;
+      var ang = Math.random() * Math.PI * 2, sp = 60 + Math.random() * 200;
+      ps.push({ x0: x, y0: y, x: x, y: y, dx: Math.cos(ang) * sp, dy: Math.sin(ang) * sp - 90, c: cols[(Math.random() * 3) | 0], r: 1 + Math.random() * 1.6 });
+    }
+    parts.forEach(function(p){ p.style.transition = 'opacity .8s ease, filter .8s ease'; p.style.opacity = '0'; p.style.filter = 'blur(4px)'; });
+    var t0 = performance.now(), OUT = 1.7, HOLD = 0.5, BACK = 1.6, shown = false;
+    function ease(k){ return k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
+    function frame(now){
+      var t = (now - t0) / 1000, end = OUT + HOLD + BACK;
+      ctx.clearRect(0, 0, W, H);
+      var alpha = t > end ? Math.max(0, 1 - (t - end) / 0.4) : 0.85;
+      ps.forEach(function(p){
+        if (t < OUT){ var k = t / OUT, e = 1 - (1 - k) * (1 - k); p.x = p.x0 + p.dx * e; p.y = p.y0 + p.dy * e; p.xe = p.x; p.ye = p.y; }
+        else if (t >= OUT + HOLD){ var u = Math.min(1, (t - OUT - HOLD) / BACK), f = ease(u); p.x = p.xe + (p.x0 - p.xe) * f; p.y = p.ye + (p.y0 - p.ye) * f; }
+        ctx.globalAlpha = alpha; ctx.fillStyle = p.c;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+      });
+      if (!shown && t >= OUT + HOLD + BACK * 0.6){ shown = true; restore(); }
+      if (t < end + 0.4) requestAnimationFrame(frame);
+      else { if (cv.parentNode) cv.parentNode.removeChild(cv); busy = false; toast(MSG); }
+    }
+    requestAnimationFrame(frame);
+  }
+})();
+
 var BH = (function(){
   var G = 6.67430e-11, c = 299792458, hbar = 1.054571817e-34, kB = 1.380649e-23;
   var YEAR = 3.15576e7, AGE = 13.8e9 * YEAR, TCMB = 2.725, TSUNCORE = 1.57e7, MPLANCK = 2.176434e-8;
@@ -283,7 +377,7 @@ var BH = (function(){
     if (ms >= 10) { ms = ms / 10; e += 1; }
     return Number(ms.toPrecision(sig)).toString() + ' × 10' + sup(e);
   }
-  var LEN = [[1.495978707e11, 'AU'], [1e3, 'km'], [1, 'm'], [1e-3, 'mm'], [1e-6, 'µm'], [1e-9, 'nm'], [1e-15, 'fm']];
+  var LEN = [[1.495978707e11, 'AU'], [1e3, 'km'], [1, 'm'], [1e-3, 'mm'], [1e-6, 'µm'], [1e-9, 'nm'], [1e-12, 'pm'], [1e-15, 'fm']];
   function length(m){
     for (var i = 0; i < LEN.length; i++){
       if (m >= LEN[i][0]) return num(m / LEN[i][0]) + ' ' + LEN[i][1];
@@ -331,6 +425,40 @@ var BH = (function(){
     if (t < YEAR) return num(t / 86400) + ' days';
     return num(t / YEAR) + ' years';
   }
+  function kelvinRGB(T){
+    var t = T / 100, r, g, b;
+    r = t <= 66 ? 255 : 329.698727446 * Math.pow(t - 60, -0.1332047592);
+    g = t <= 66 ? 99.4708025861 * Math.log(t) - 161.1195681661 : 288.1221695283 * Math.pow(t - 60, -0.0755148492);
+    b = t >= 66 ? 255 : (t <= 19 ? 0 : 138.5177312231 * Math.log(t - 10) - 305.0447927307);
+    function c(x){ return Math.round(Math.max(0, Math.min(255, x))); }
+    return 'rgb(' + c(r) + ',' + c(g) + ',' + c(b) + ')';
+  }
+  function band(l){
+    if (l < 1e-11) return 'gamma rays';
+    if (l < 1e-8) return 'X-rays';
+    if (l < 3.8e-7) return 'ultraviolet';
+    if (l <= 7.5e-7) return 'visible light';
+    if (l < 1e-3) return 'infrared';
+    if (l < 1) return 'microwaves';
+    return 'radio waves';
+  }
+  function colourName(T){
+    if (T < 2000) return 'deep red';
+    if (T < 3500) return 'orange-red';
+    if (T < 5000) return 'orange';
+    if (T < 6500) return 'yellow-white';
+    if (T < 8000) return 'white';
+    return 'blue-white';
+  }
+  function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+  function glow(T){
+    var lam = 2.897771955e-3 / T, b = band(lam), lit = T >= 800 && T <= 40000;
+    var say;
+    if (T < 800) say = 'Too cold to glow. Its radiation peaks in the ' + b + '.';
+    else if (lit) say = 'It would glow ' + colourName(T) + (b !== 'visible light' ? ', though most of its radiation comes out as ' + b : '') + '.';
+    else say = 'Far too hot to look at: most of its radiation comes out as ' + b + '.';
+    return { gVal: lit ? cap(colourName(T)) : cap(b), gSub: 'Peak wavelength ' + length(lam), gSay: say, gColor: lit ? kelvinRGB(T) : null };
+  }
   function compute(M){
     var rs = 2 * G * M / (c * c);
     var T = hbar * Math.pow(c, 3) / (8 * Math.PI * G * M * kB);
@@ -343,7 +471,9 @@ var BH = (function(){
     var TSay = T < TCMB
       ? 'Colder than the cosmic microwave background (2.7 K), so today it absorbs more energy than it radiates and slowly grows.'
       : 'Hotter than the cosmic microwave background (2.7 K), so it loses energy and shrinks' + (T > TSUNCORE ? ', and hotter than the centre of the Sun.' : '.');
+    var gl = glow(T);
     return {
+      gVal: gl.gVal, gSub: gl.gSub, gSay: gl.gSay, gColor: gl.gColor,
       rs: rs, T: T, t: t,
       rVal: length(rs), rSub: '= ' + num(rs) + ' m', rSay: compareSize(2 * rs),
       tVal: temperature(T), tSub: '= ' + num(T) + ' K', tSay: TSay,
@@ -381,6 +511,9 @@ var BH = (function(){
     set('r-val', r.rVal); set('r-sub', sub(r.rSub, r.rVal)); set('r-say', r.rSay);
     set('t-val', r.tVal); set('t-sub', sub(r.tSub, r.tVal)); set('t-say', r.tSay);
     set('e-val', r.eVal); set('e-sub', sub(r.eSub, r.eVal)); set('e-say', r.eSay);
+    set('g-val', r.gVal); set('g-sub', r.gSub); set('g-say', r.gSay);
+    var sw = document.getElementById('g-sw');
+    if (sw){ sw.style.background = r.gColor || 'transparent'; sw.classList.toggle('lit', !!r.gColor); }
     set('calc-warn', r.warn);
   }
   function press(btn){

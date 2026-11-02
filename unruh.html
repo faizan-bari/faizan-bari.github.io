@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Unruh effect | Faizan Bari</title>
+<meta name="description" content="Choose an acceleration and see the temperature an accelerating observer measures in empty space.">
+<meta property="og:title" content="The Unruh effect | Faizan Bari">
+<meta property="og:description" content="Choose an acceleration and see the temperature an accelerating observer measures in empty space.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 15 L5 30 M16 15 L27 30' stroke='%232B5D51' stroke-width='2.2' fill='none'/%3E%3Ccircle cx='16' cy='13' r='6' fill='%23A33F28'/%3E%3C/svg%3E">
+<script>try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
+<style>
+/* Layout: one reading column; on wide screens each section's name sits in a left margin column. The journey is drawn as a worldline, each event with its future light cone. */
+:root{
+  --paper:#F3F5F2;
+  --surface:#E7ECE8;
+  --ink:#16202A;
+  --muted:#56616B;
+  --rule:#D2D9D5;
+  --pine:#2B5D51;
+  --chinar:#A33F28;
+  --font-display:"Gloock","Iowan Old Style",Georgia,serif;
+  --font-body:"Newsreader","Iowan Old Style",Georgia,serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F151B; --surface:#17202A; --ink:#E4E9E6; --muted:#9AA5A2; --rule:#2A333C; --pine:#86BEAD; --chinar:#E3825F; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F151B; --surface:#17202A; --ink:#E4E9E6; --muted:#9AA5A2; --rule:#2A333C; --pine:#86BEAD; --chinar:#E3825F; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:1.1875rem;
+  line-height:1.65;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  position:relative;
+}
+.wrap{max-width:66rem;margin:0 auto}
+a{color:var(--pine);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--chinar)}
+:focus-visible{outline:2px solid var(--chinar);outline-offset:3px;border-radius:2px}
+p{margin:0}
+.mono{font-family:var(--font-mono);font-size:.76rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+button{font:inherit}
+
+/* Header */
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.75rem 1.5rem;padding-block:1.5rem;border-bottom:1px solid var(--rule)}
+.brand{font-family:var(--font-display);font-size:1.4rem;color:var(--ink);text-decoration:none}
+.nav{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem 1.3rem;font-family:var(--font-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
+.nav a{color:var(--muted);text-decoration:none}
+.nav a:hover,.nav a[aria-current="page"]{color:var(--ink)}
+.theme-btn{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;padding:0;border:1px solid var(--rule);border-radius:50%;background:transparent;color:var(--muted);cursor:pointer}
+.theme-btn:hover{color:var(--ink);border-color:var(--ink)}
+.theme-btn svg{width:14px;height:14px;display:block}
+
+/* Hero (home) */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 15.5rem;gap:2.5rem 4rem;align-items:end;padding-block:4.5rem 3.75rem;position:relative}
+.hero-text{min-width:0}
+.hero h1{font-family:var(--font-display);font-weight:400;font-size:clamp(3.25rem,10vw,6.5rem);line-height:.95;letter-spacing:-.01em;margin:.9rem 0 1.4rem;text-wrap:balance}
+.lede{font-size:1.4rem;line-height:1.5;max-width:33rem;text-wrap:pretty}
+
+/* Page hero (inner pages) */
+.page-hero{padding-block:3.5rem 2.75rem}
+.page-hero h1{font-family:var(--font-display);font-weight:400;font-size:clamp(2.6rem,7vw,4.25rem);line-height:1;letter-spacing:-.005em;margin:.8rem 0 1.1rem;text-wrap:balance}
+
+/* Sections */
+.block{display:grid;grid-template-columns:13rem minmax(0,1fr);gap:1.25rem 3.5rem;padding-block:3.5rem;border-top:1px solid var(--rule)}
+.block-head{min-width:0}
+.block-head h2{font-family:var(--font-display);font-weight:400;font-size:2.1rem;line-height:1.1;margin:.45rem 0 .7rem;text-wrap:balance}
+.note{font-size:.95rem;line-height:1.5;color:var(--muted);max-width:15rem}
+.block-body{min-width:0;max-width:36rem;display:flex;flex-direction:column;gap:1.1rem}
+.block-body.wide{max-width:44rem}
+.more{font-family:var(--font-mono);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase}
+.links-row{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}
+
+/* Lists of things (explore, notes, reading) */
+.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.items > li{display:flex;flex-direction:column;gap:.3rem;padding-block:1.1rem;border-bottom:1px solid var(--rule)}
+.items > li:first-child{padding-top:0}
+.items h3{font-family:var(--font-body);font-size:1.25rem;font-weight:500;line-height:1.3;margin:0}
+.items h3 a{color:var(--ink);text-decoration-color:var(--rule)}
+.items h3 a:hover{color:var(--pine);text-decoration-color:currentColor}
+.meta{font-family:var(--font-mono);font-size:.76rem;letter-spacing:.04em;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem 2rem;padding-block:2.25rem 3rem;border-top:1px solid var(--rule)}
+.foot .nav{gap:.35rem 1.1rem;font-size:.72rem}
+
+/* Hidden evaporation */
+.egg-canvas{position:fixed;inset:0;z-index:60;pointer-events:none}
+.egg-toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom, 0px));transform:translate(-50%,12px);opacity:0;transition:opacity .4s ease,transform .4s ease;background:var(--ink);color:var(--paper);font-family:var(--font-mono);font-size:.8rem;line-height:1.5;padding:.75rem 1rem;border-radius:4px;z-index:61;width:max-content;max-width:calc(100vw - 32px)}
+.egg-toast.on{opacity:1;transform:translate(-50%,0)}
+.sig{cursor:default;user-select:none}
+
+@media (max-width:780px){
+  .hero{grid-template-columns:minmax(0,1fr);padding-block:3rem 2.75rem;gap:2.25rem}
+  .block{grid-template-columns:minmax(0,1fr);padding-block:2.75rem;gap:1rem}
+  .note{max-width:28rem}
+  .page-hero{padding-block:2.75rem 2rem}
+}
+@media (max-width:480px){
+  body{font-size:1.125rem}
+  .lede{font-size:1.25rem}
+}
+
+.un{display:flex;flex-direction:column;gap:1.1rem}
+.presets{display:flex;flex-wrap:wrap;gap:.5rem}
+.presets button{font-family:var(--font-mono);font-size:.76rem;letter-spacing:.03em;color:var(--ink);background:transparent;border:1px solid var(--rule);border-radius:999px;padding:.35rem .85rem;cursor:pointer}
+.presets button:hover{border-color:var(--ink)}
+.presets button[aria-pressed="true"]{border-color:var(--pine);color:var(--pine);background:var(--surface)}
+.rind svg{display:block;width:100%;height:auto}
+.rind text{font-family:var(--font-mono);font-size:12px;fill:var(--muted)}
+.rind .lbl{font-family:var(--font-body);font-style:italic;font-size:15px}
+.rind .ax{stroke:var(--muted);stroke-width:1}
+.rind .hzn{stroke:var(--ink);stroke-width:1.3;stroke-dasharray:6 5}
+.rind .beyond{fill:var(--chinar);fill-opacity:.07}
+.rind .wl{fill:none;stroke:var(--pine);stroke-width:2.6}
+.rind .obs{fill:var(--pine)}
+.rind .q{fill:var(--chinar)}
+.ctrl{display:flex;align-items:center;gap:.75rem 1rem;flex-wrap:wrap}
+.ctrl input[type=range]{flex:1 1 14rem;min-width:0;accent-color:var(--pine)}
+.anow{font-family:var(--font-mono);font-size:.85rem;font-variant-numeric:tabular-nums;min-width:9rem}
+.results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,12.5rem),1fr));gap:1rem}
+.result{background:var(--surface);border-radius:4px;padding:1.1rem 1.2rem 1.2rem;display:flex;flex-direction:column;gap:.35rem;min-width:0}
+.result .value{font-family:var(--font-display);font-size:1.55rem;line-height:1.2;font-variant-numeric:tabular-nums}
+.result .sub{font-family:var(--font-mono);font-size:.78rem;color:var(--muted);overflow-wrap:anywhere}
+.scale-note{font-family:var(--font-mono);font-size:.74rem;color:var(--muted)}
+.formula{text-align:center;font-style:italic;font-size:1.3rem}
+.formula sub{font-size:.65em}
+</style>
+</head>
+<body>
+<header class="wrap top">
+  <a class="brand" href="index.html">Faizan Bari</a>
+  <nav class="nav" aria-label="Site">
+    <a href="index.html#explore">Explore</a>
+    <a href="now.html">Now</a>
+    <a href="notes.html">Notes</a>
+    <a href="reading.html">Reading</a>
+    <a href="essays.html">Essays</a>
+    <a href="cv.html">CV</a>
+    <a href="index.html#contact">Contact</a>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Switch theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1.5 A6.5 6.5 0 0 1 8 14.5 Z" fill="currentColor"/></svg></button>
+  </nav>
+</header>
+
+<main>
+  <section class="wrap page-hero" aria-labelledby="ph">
+    <p class="mono">Explore</p>
+    <h1 id="ph">The Unruh effect</h1>
+    <p class="lede">Empty space isn't empty for everyone. Accelerate through the vacuum and you find yourself in a warm bath of particles, with a horizon behind you.</p>
+  </section>
+
+  <section class="wrap block" aria-labelledby="un-h">
+    <div class="block-head">
+      <p class="mono">Interactive</p>
+      <h2 id="un-h">Accelerate</h2>
+      <p class="note">Choose an acceleration and see the temperature the accelerating observer measures, and how far behind them their horizon sits.</p>
+    </div>
+    <div class="block-body wide un">
+      <div class="presets" role="group" aria-label="Examples">
+        <button type="button" data-a="9.80665" aria-pressed="true">Standing on Earth</button>
+        <button type="button" data-a="88.26" aria-pressed="false">A fighter pilot at 9 g</button>
+        <button type="button" data-a="1e12" aria-pressed="false">A neutron star's surface</button>
+        <button type="button" data-a="2.466e20" aria-pressed="false">Feel 1 kelvin</button>
+        <button type="button" data-a="7.226e22" aria-pressed="false">Feel room temperature</button>
+      </div>
+      <div class="rind">
+        <svg id="un-svg" viewBox="0 0 560 360" role="img" aria-labelledby="un-svg-t">
+          <title id="un-svg-t">Spacetime diagram of an accelerating observer: a hyperbola that approaches but never meets its horizon, the 45-degree line through the origin.</title>
+          <g id="un-static"></g>
+          <path id="un-wl" class="wl"/>
+          <g id="un-q"></g>
+          <circle id="un-obs" class="obs" r="5"/>
+        </svg>
+        <p class="scale-note">Not to scale. The real distance between the observer and the horizon is c²/a.</p>
+      </div>
+      <div class="ctrl">
+        <label for="un-a" class="mono">Acceleration</label>
+        <input type="range" id="un-a" min="0" max="24" step="0.01" value="0.99">
+        <span class="anow" id="un-anow">9.81 m/s²</span>
+      </div>
+      <div class="results" aria-live="polite">
+        <div class="result"><p class="mono">Acceleration</p><p class="value" id="un-aval">1 g</p><p class="sub" id="un-asub">9.81 m/s²</p></div>
+        <div class="result"><p class="mono">Unruh temperature</p><p class="value" id="un-T">4 × 10⁻²⁰ K</p><p class="sub" id="un-Tsub"></p></div>
+        <div class="result"><p class="mono">Distance to horizon</p><p class="value" id="un-d">0.97 light-years</p><p class="sub" id="un-dsub"></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap block" aria-labelledby="un-p">
+    <div class="block-head">
+      <p class="mono">The physics</p>
+      <h2 id="un-p">Heat from acceleration</h2>
+    </div>
+    <div class="block-body">
+      <p>An observer with constant proper acceleration a traces out a hyperbola in spacetime. Light sent from behind the 45° line through the origin can never catch up with them: that line is their horizon, a distance c²/a behind them.</p>
+      <p>In quantum field theory, the state that an inertial observer calls the vacuum looks, to the accelerating observer, like a thermal bath at temperature</p>
+      <p class="formula">T = ħa / 2πck<sub>B</sub></p>
+      <p>This is the Unruh effect. At everyday accelerations the temperature is far too small to measure: standing on Earth, it is about 4 × 10⁻²⁰ K.</p>
+      <p>It is the same physics as Hawking radiation. Replace a by the surface gravity κ of a black hole's horizon and you get the Hawking temperature, T = ħκ / 2πck<sub>B</sub>. Both come from a horizon and from the way the vacuum is entangled across it.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p class="mono sig">Faizan Bari · 2026</p>
+  <nav class="nav" aria-label="Footer">
+    <a href="index.html#explore">Explore</a>
+    <a href="now.html">Now</a>
+    <a href="notes.html">Notes</a>
+    <a href="reading.html">Reading</a>
+    <a href="essays.html">Essays</a>
+    <a href="cv.html">CV</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</footer>
+<script>
+
+/* Light/dark switch */
+(function(){
+  var root = document.documentElement, btn = document.getElementById('theme-btn');
+  if (!btn) return;
+  var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  function current(){
+    var t = root.getAttribute('data-theme');
+    if (t === 'dark' || t === 'light') return t;
+    return mq && mq.matches ? 'dark' : 'light';
+  }
+  function label(){
+    var text = current() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
+    btn.setAttribute('aria-label', text);
+    btn.title = text;
+  }
+  btn.addEventListener('click', function(){
+    var next = current() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    label();
+  });
+  if (mq && mq.addEventListener) mq.addEventListener('change', label);
+  label();
+})();
+
+/* Hidden: type "hawking" anywhere (or tap the footer signature seven times) and the page evaporates, then comes back. */
+(function(){
+  var buf = '', busy = false, taps = 0, tapTimer = 0;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.addEventListener('keydown', function(e){
+    var tag = e.target && e.target.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (!e.key || e.key.length !== 1) return;
+    buf = (buf + e.key.toLowerCase()).slice(-7);
+    if (buf === 'hawking'){ buf = ''; evaporate(); }
+  });
+  var sig = document.querySelector('.foot .sig');
+  if (sig) sig.addEventListener('click', function(){
+    taps++; clearTimeout(tapTimer);
+    tapTimer = setTimeout(function(){ taps = 0; }, 2500);
+    if (taps >= 7){ taps = 0; evaporate(); }
+  });
+  function toast(msg){
+    var t = document.createElement('div');
+    t.className = 'egg-toast'; t.setAttribute('role', 'status'); t.textContent = msg;
+    document.body.appendChild(t);
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ t.classList.add('on'); }); });
+    setTimeout(function(){ t.classList.remove('on'); setTimeout(function(){ if (t.parentNode) t.parentNode.removeChild(t); }, 600); }, 4500);
+  }
+  var MSG = 'Evaporated, then restored. If evaporation is unitary, no information is lost.';
+  function evaporate(){
+    if (busy) return; busy = true;
+    var parts = Array.prototype.slice.call(document.querySelectorAll('header.top, main, footer.foot, #pairs'));
+    function restore(){ parts.forEach(function(p){ p.style.opacity = ''; p.style.filter = ''; }); }
+    if (reduce){
+      parts.forEach(function(p){ p.style.transition = 'opacity .3s'; p.style.opacity = '0.15'; });
+      setTimeout(function(){ restore(); busy = false; toast(MSG); }, 700);
+      return;
+    }
+    var cs = getComputedStyle(document.documentElement);
+    var cols = ['--ink', '--pine', '--chinar'].map(function(k){ return cs.getPropertyValue(k).trim(); });
+    var W = window.innerWidth, H = window.innerHeight, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var cv = document.createElement('canvas');
+    cv.className = 'egg-canvas'; cv.setAttribute('aria-hidden', 'true');
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    document.body.appendChild(cv);
+    var ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var blocks = Array.prototype.slice.call(document.querySelectorAll('h1, h2, h3, p, li, dt, dd, .brand, .nav a'))
+      .map(function(e){ return e.getBoundingClientRect(); })
+      .filter(function(r){ return r.width > 4 && r.height > 4 && r.bottom > 0 && r.top < H && r.right > 0 && r.left < W; });
+    if (!blocks.length) blocks = [{ left: 0, top: 0, width: W, height: H }];
+    var N = Math.min(420, Math.max(160, Math.round(W * H / 2600))), ps = [];
+    for (var i = 0; i < N; i++){
+      var b = blocks[(Math.random() * blocks.length) | 0];
+      var x = b.left + Math.random() * b.width, y = b.top + Math.random() * b.height;
+      var ang = Math.random() * Math.PI * 2, sp = 60 + Math.random() * 200;
+      ps.push({ x0: x, y0: y, x: x, y: y, dx: Math.cos(ang) * sp, dy: Math.sin(ang) * sp - 90, c: cols[(Math.random() * 3) | 0], r: 1 + Math.random() * 1.6 });
+    }
+    parts.forEach(function(p){ p.style.transition = 'opacity .8s ease, filter .8s ease'; p.style.opacity = '0'; p.style.filter = 'blur(4px)'; });
+    var t0 = performance.now(), OUT = 1.7, HOLD = 0.5, BACK = 1.6, shown = false;
+    function ease(k){ return k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
+    function frame(now){
+      var t = (now - t0) / 1000, end = OUT + HOLD + BACK;
+      ctx.clearRect(0, 0, W, H);
+      var alpha = t > end ? Math.max(0, 1 - (t - end) / 0.4) : 0.85;
+      ps.forEach(function(p){
+        if (t < OUT){ var k = t / OUT, e = 1 - (1 - k) * (1 - k); p.x = p.x0 + p.dx * e; p.y = p.y0 + p.dy * e; p.xe = p.x; p.ye = p.y; }
+        else if (t >= OUT + HOLD){ var u = Math.min(1, (t - OUT - HOLD) / BACK), f = ease(u); p.x = p.xe + (p.x0 - p.xe) * f; p.y = p.ye + (p.y0 - p.ye) * f; }
+        ctx.globalAlpha = alpha; ctx.fillStyle = p.c;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+      });
+      if (!shown && t >= OUT + HOLD + BACK * 0.6){ shown = true; restore(); }
+      if (t < end + 0.4) requestAnimationFrame(frame);
+      else { if (cv.parentNode) cv.parentNode.removeChild(cv); busy = false; toast(MSG); }
+    }
+    requestAnimationFrame(frame);
+  }
+})();
+
+(function(){
+  var svg = document.getElementById('un-svg');
+  if (!svg) return;
+  var NS = 'http://www.w3.org/2000/svg';
+  var hbar = 1.054571817e-34, c = 299792458, kB = 1.380649e-23, g0 = 9.80665, LY = 9.4607e15;
+  var W = 560, H = 360, OX = 150, OY = 180;
+  var slider = document.getElementById('un-a');
+  var presets = Array.prototype.slice.call(document.querySelectorAll('.presets button'));
+  var reduce = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  var SUP = { '-': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+  function sup(n){ return String(n).split('').map(function(ch){ return SUP[ch] || ch; }).join(''); }
+  function num(x, sig){
+    sig = sig || 3;
+    if (!isFinite(x)) return '—';
+    var e = Math.floor(Math.log10(Math.abs(x)));
+    if (e >= -2 && e <= 5) return x.toLocaleString('en-US', { maximumSignificantDigits: sig });
+    var m = Number((x / Math.pow(10, e)).toPrecision(sig));
+    if (m >= 10){ m = m / 10; e += 1; }
+    return Number(m.toPrecision(sig)) + ' × 10' + sup(e);
+  }
+  function temp(T){
+    if (T < 1e-9) return num(T) + ' K';
+    if (T < 1e-6) return num(T * 1e9) + ' nK';
+    if (T < 1e-3) return num(T * 1e6) + ' µK';
+    if (T < 0.9995) return num(T * 1e3) + ' mK';
+    return num(T) + ' K';
+  }
+  function dist(d){
+    if (d >= 0.1 * LY) return num(d / LY) + ' light-years';
+    if (d >= 1.496e10) return num(d / 1.495978707e11) + ' AU';
+    if (d >= 1e3) return num(d / 1e3) + ' km';
+    if (d >= 1) return num(d) + ' m';
+    if (d >= 1e-3) return num(d * 1e3) + ' mm';
+    if (d >= 1e-6) return num(d * 1e6) + ' µm';
+    if (d >= 1e-9) return num(d * 1e9) + ' nm';
+    return num(d) + ' m';
+  }
+  function el(name, attrs, parent){
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    parent.appendChild(e); return e;
+  }
+  function txt(x, y, s, cls, anchor, parent){
+    var e = el('text', { x: x, y: y, class: cls || '', 'text-anchor': anchor || 'start' }, parent);
+    e.textContent = s; return e;
+  }
+  var st = document.getElementById('un-static');
+  el('polygon', { points: (OX + OY - 6) + ',6 6,6 6,' + (OX + OY - 6), class: 'beyond' }, st);
+  el('line', { x1: 6, x2: W - 6, y1: OY, y2: OY, class: 'ax' }, st);
+  el('line', { x1: OX, x2: OX, y1: 6, y2: H - 6, class: 'ax' }, st);
+  el('line', { x1: OX, y1: OY, x2: OX + (OY - 6), y2: 6, class: 'hzn' }, st);
+  el('line', { x1: OX, y1: OY, x2: OX + (H - 6 - OY), y2: H - 6, class: 'hzn' }, st);
+  txt(OX + 6, 18, 'time', '', 'start', st);
+  txt(W - 8, OY - 8, 'space', '', 'end', st);
+  txt(OX + (OY - 6) - 4, 22, 'horizon', 'lbl', 'end', st);
+  txt(14, 46, 'no signal from', '', 'start', st);
+  txt(14, 62, 'here reaches', '', 'start', st);
+  txt(14, 78, 'the observer', '', 'start', st);
+
+  var aExact = g0, rho = 60, qs = [], last = 0, raf = 0, running = false, onScreen = true, tau = 0, rate = 0;
+  var wl = document.getElementById('un-wl'), obs = document.getElementById('un-obs'), qg = document.getElementById('un-q');
+  function la(){ return Number(slider.value); }
+  function update(){
+    var a = aExact;
+    var T = hbar * a / (2 * Math.PI * c * kB), d = c * c / a;
+    rho = 170 * Math.pow(14 / 170, la() / 24);
+    var tmax = Math.min(OY - 8, H - 8 - OY);
+    var dd = '';
+    for (var y = -tmax; y <= tmax; y += 3){
+      var x = Math.sqrt(rho * rho + y * y);
+      if (OX + x > W - 8) continue;
+      dd += (dd ? 'L' : 'M') + (OX + x).toFixed(1) + ' ' + (OY - y).toFixed(1);
+    }
+    wl.setAttribute('d', dd);
+    rate = Math.max(0.3, Math.min(14, 1 + (Math.log10(T) + 20) * 0.6));
+    document.getElementById('un-anow').textContent = num(a) + ' m/s²';
+    document.getElementById('un-aval').textContent = num(a / g0) + ' g';
+    document.getElementById('un-asub').textContent = num(a) + ' m/s²';
+    document.getElementById('un-T').textContent = temp(T);
+    document.getElementById('un-Tsub').textContent = T < 2.725 ? 'Far colder than the cosmic microwave background (2.7 K).' : 'Warmer than the cosmic microwave background (2.7 K).';
+    document.getElementById('un-d').textContent = dist(d);
+    document.getElementById('un-dsub').textContent = '= c²/a = ' + num(d) + ' m';
+    slider.setAttribute('aria-valuetext', num(a) + ' metres per second squared');
+    placeObs();
+  }
+  function placeObs(){
+    var tmax = Math.min(OY - 8, H - 8 - OY);
+    var tmaxTau = Math.asinh(tmax / rho);
+    var t = ((tau % (2 * tmaxTau)) + 2 * tmaxTau) % (2 * tmaxTau) - tmaxTau;
+    var x = rho * Math.cosh(t), y = rho * Math.sinh(t);
+    if (OX + x > W - 8){ x = W - 8 - OX; }
+    obs.setAttribute('cx', (OX + x).toFixed(1));
+    obs.setAttribute('cy', (OY - y).toFixed(1));
+    return [OX + x, OY - y, t];
+  }
+  function spawn(){
+    var p = placeObs();
+    var back = (p[0] - OX) - Math.abs(OY - p[1]);
+    var off = Math.random() * Math.max(6, back * 0.9);
+    var cx = p[0] - off, cy = p[1] + (Math.random() - 0.5) * 30;
+    var q = el('circle', { cx: cx.toFixed(1), cy: cy.toFixed(1), r: (1.6 + Math.random() * 1.4).toFixed(1), class: 'q', opacity: 0 }, qg);
+    qs.push({ e: q, age: 0, life: 1.2 + Math.random() * 1.2, vx: (Math.random() - 0.5) * 12, vy: (Math.random() - 0.5) * 12, x: cx, y: cy });
+  }
+  var acc = 0;
+  function frame(now){
+    if (!running) return;
+    var dt = Math.min(0.05, (now - last) / 1000); last = now;
+    tau += dt * 0.6;
+    placeObs();
+    acc += dt * rate;
+    while (acc > 1){ acc -= 1; if (qs.length < 60) spawn(); }
+    for (var i = qs.length - 1; i >= 0; i--){
+      var q = qs[i]; q.age += dt; q.x += q.vx * dt; q.y += q.vy * dt;
+      var k = q.age / q.life, op = k < 0.2 ? k / 0.2 : Math.max(0, 1 - (k - 0.2) / 0.8);
+      q.e.setAttribute('opacity', (0.75 * op).toFixed(2));
+      q.e.setAttribute('cx', q.x.toFixed(1)); q.e.setAttribute('cy', q.y.toFixed(1));
+      if (q.age >= q.life){ qg.removeChild(q.e); qs.splice(i, 1); }
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  function shouldRun(){ return !reduce.matches && onScreen && !document.hidden; }
+  function sync(){
+    if (shouldRun() && !running){ running = true; last = performance.now(); raf = requestAnimationFrame(frame); }
+    else if (!shouldRun() && running){ running = false; cancelAnimationFrame(raf); }
+  }
+  presets.forEach(function(b){
+    b.addEventListener('click', function(){
+      aExact = Number(b.getAttribute('data-a'));
+      slider.value = Math.log10(aExact).toFixed(2);
+      presets.forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      update();
+    });
+  });
+  slider.addEventListener('input', function(){ aExact = Math.pow(10, la()); presets.forEach(function(x){ x.setAttribute('aria-pressed', 'false'); }); update(); });
+  slider.value = Math.log10(g0).toFixed(2);
+  update();
+  if (reduce.matches){ for (var i = 0; i < 8; i++) spawn(); qs.forEach(function(q){ q.e.setAttribute('opacity', '0.6'); }); }
+  sync();
+  if ('IntersectionObserver' in window) new IntersectionObserver(function(e){ onScreen = e[0].isIntersecting; sync(); }).observe(svg);
+  document.addEventListener('visibilitychange', sync);
+})();
+</script>
+</body>
+</html>

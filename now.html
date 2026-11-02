@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Now | Faizan Bari</title>
+<meta name="description" content="What Faizan Bari is working on this month.">
+<meta property="og:title" content="Now | Faizan Bari">
+<meta property="og:description" content="What Faizan Bari is working on this month.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 15 L5 30 M16 15 L27 30' stroke='%232B5D51' stroke-width='2.2' fill='none'/%3E%3Ccircle cx='16' cy='13' r='6' fill='%23A33F28'/%3E%3C/svg%3E">
+<script>try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
+<style>
+/* Layout: one reading column; on wide screens each section's name sits in a left margin column. The journey is drawn as a worldline, each event with its future light cone. */
+:root{
+  --paper:#F3F5F2;
+  --surface:#E7ECE8;
+  --ink:#16202A;
+  --muted:#56616B;
+  --rule:#D2D9D5;
+  --pine:#2B5D51;
+  --chinar:#A33F28;
+  --font-display:"Gloock","Iowan Old Style",Georgia,serif;
+  --font-body:"Newsreader","Iowan Old Style",Georgia,serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F151B; --surface:#17202A; --ink:#E4E9E6; --muted:#9AA5A2; --rule:#2A333C; --pine:#86BEAD; --chinar:#E3825F; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F151B; --surface:#17202A; --ink:#E4E9E6; --muted:#9AA5A2; --rule:#2A333C; --pine:#86BEAD; --chinar:#E3825F; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:1.1875rem;
+  line-height:1.65;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  position:relative;
+}
+.wrap{max-width:66rem;margin:0 auto}
+a{color:var(--pine);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--chinar)}
+:focus-visible{outline:2px solid var(--chinar);outline-offset:3px;border-radius:2px}
+p{margin:0}
+.mono{font-family:var(--font-mono);font-size:.76rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+button{font:inherit}
+
+/* Header */
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.75rem 1.5rem;padding-block:1.5rem;border-bottom:1px solid var(--rule)}
+.brand{font-family:var(--font-display);font-size:1.4rem;color:var(--ink);text-decoration:none}
+.nav{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem 1.3rem;font-family:var(--font-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
+.nav a{color:var(--muted);text-decoration:none}
+.nav a:hover,.nav a[aria-current="page"]{color:var(--ink)}
+.theme-btn{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;padding:0;border:1px solid var(--rule);border-radius:50%;background:transparent;color:var(--muted);cursor:pointer}
+.theme-btn:hover{color:var(--ink);border-color:var(--ink)}
+.theme-btn svg{width:14px;height:14px;display:block}
+
+/* Hero (home) */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 15.5rem;gap:2.5rem 4rem;align-items:end;padding-block:4.5rem 3.75rem;position:relative}
+.hero-text{min-width:0}
+.hero h1{font-family:var(--font-display);font-weight:400;font-size:clamp(3.25rem,10vw,6.5rem);line-height:.95;letter-spacing:-.01em;margin:.9rem 0 1.4rem;text-wrap:balance}
+.lede{font-size:1.4rem;line-height:1.5;max-width:33rem;text-wrap:pretty}
+
+/* Page hero (inner pages) */
+.page-hero{padding-block:3.5rem 2.75rem}
+.page-hero h1{font-family:var(--font-display);font-weight:400;font-size:clamp(2.6rem,7vw,4.25rem);line-height:1;letter-spacing:-.005em;margin:.8rem 0 1.1rem;text-wrap:balance}
+
+/* Sections */
+.block{display:grid;grid-template-columns:13rem minmax(0,1fr);gap:1.25rem 3.5rem;padding-block:3.5rem;border-top:1px solid var(--rule)}
+.block-head{min-width:0}
+.block-head h2{font-family:var(--font-display);font-weight:400;font-size:2.1rem;line-height:1.1;margin:.45rem 0 .7rem;text-wrap:balance}
+.note{font-size:.95rem;line-height:1.5;color:var(--muted);max-width:15rem}
+.block-body{min-width:0;max-width:36rem;display:flex;flex-direction:column;gap:1.1rem}
+.block-body.wide{max-width:44rem}
+.more{font-family:var(--font-mono);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase}
+.links-row{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}
+
+/* Lists of things (explore, notes, reading) */
+.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.items > li{display:flex;flex-direction:column;gap:.3rem;padding-block:1.1rem;border-bottom:1px solid var(--rule)}
+.items > li:first-child{padding-top:0}
+.items h3{font-family:var(--font-body);font-size:1.25rem;font-weight:500;line-height:1.3;margin:0}
+.items h3 a{color:var(--ink);text-decoration-color:var(--rule)}
+.items h3 a:hover{color:var(--pine);text-decoration-color:currentColor}
+.meta{font-family:var(--font-mono);font-size:.76rem;letter-spacing:.04em;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem 2rem;padding-block:2.25rem 3rem;border-top:1px solid var(--rule)}
+.foot .nav{gap:.35rem 1.1rem;font-size:.72rem}
+
+/* Hidden evaporation */
+.egg-canvas{position:fixed;inset:0;z-index:60;pointer-events:none}
+.egg-toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom, 0px));transform:translate(-50%,12px);opacity:0;transition:opacity .4s ease,transform .4s ease;background:var(--ink);color:var(--paper);font-family:var(--font-mono);font-size:.8rem;line-height:1.5;padding:.75rem 1rem;border-radius:4px;z-index:61;width:max-content;max-width:calc(100vw - 32px)}
+.egg-toast.on{opacity:1;transform:translate(-50%,0)}
+.sig{cursor:default;user-select:none}
+
+@media (max-width:780px){
+  .hero{grid-template-columns:minmax(0,1fr);padding-block:3rem 2.75rem;gap:2.25rem}
+  .block{grid-template-columns:minmax(0,1fr);padding-block:2.75rem;gap:1rem}
+  .note{max-width:28rem}
+  .page-hero{padding-block:2.75rem 2rem}
+}
+@media (max-width:480px){
+  body{font-size:1.125rem}
+  .lede{font-size:1.25rem}
+}
+
+.nowlist{margin:0;display:flex;flex-direction:column}
+.nowlist div{display:grid;grid-template-columns:8.5rem minmax(0,1fr);gap:.3rem 1.5rem;padding-block:1.1rem;border-bottom:1px solid var(--rule)}
+.nowlist div:first-child{padding-top:0}
+.nowlist dt{font-family:var(--font-display);font-size:1.3rem;line-height:1.35}
+.nowlist dd{margin:0;min-width:0}
+@media (max-width:480px){ .nowlist div{grid-template-columns:minmax(0,1fr);gap:.2rem} }
+</style>
+</head>
+<body>
+<header class="wrap top">
+  <a class="brand" href="index.html">Faizan Bari</a>
+  <nav class="nav" aria-label="Site">
+    <a href="index.html#explore">Explore</a>
+    <a href="now.html" aria-current="page">Now</a>
+    <a href="notes.html">Notes</a>
+    <a href="reading.html">Reading</a>
+    <a href="essays.html">Essays</a>
+    <a href="cv.html">CV</a>
+    <a href="index.html#contact">Contact</a>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Switch theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1.5 A6.5 6.5 0 0 1 8 14.5 Z" fill="currentColor"/></svg></button>
+  </nav>
+</header>
+
+<main>
+  <section class="wrap page-hero" aria-labelledby="ph">
+    <p class="mono">Now</p>
+    <h1 id="ph">What I'm doing now</h1>
+    <p class="lede">A snapshot of what's on my desk this month.</p>
+    <p class="meta" style="margin-top:1rem">Updated 2 November 2026 · Chennai</p>
+  </section>
+
+  <section class="wrap block" aria-labelledby="now-h">
+    <div class="block-head">
+      <p class="mono">November 2026</p>
+      <h2 id="now-h">This month</h2>
+    </div>
+    <div class="block-body">
+      <dl class="nowlist">
+        <div>
+          <dt>Research</dt>
+          <dd>Working through Penington and Witten's <a href="https://arxiv.org/abs/2301.07257">Algebras and states in JT gravity</a>, the starting point of my project on JT gravity coupled to a bath and the Page curve.</dd>
+        </div>
+        <div>
+          <dt>Courses</dt>
+          <dd>Black Holes, Holography and Quantum Information, typesetting my lecture notes as I go; and Mathematical Methods II.</dd>
+        </div>
+        <div>
+          <dt>Self-study</dt>
+          <dd>David Tong's lectures on general relativity, with a problem set for each chapter.</dd>
+        </div>
+        <div>
+          <dt>Writing</dt>
+          <dd>Getting my first essays about growing up in Kashmir ready for this site.</dd>
+        </div>
+        <div>
+          <dt>Building</dt>
+          <dd>This website, including the <a href="index.html#explore">small pieces of physics</a> you can play with.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p class="mono sig">Faizan Bari · 2026</p>
+  <nav class="nav" aria-label="Footer">
+    <a href="index.html#explore">Explore</a>
+    <a href="now.html">Now</a>
+    <a href="notes.html">Notes</a>
+    <a href="reading.html">Reading</a>
+    <a href="essays.html">Essays</a>
+    <a href="cv.html">CV</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</footer>
+<script>
+
+/* Light/dark switch */
+(function(){
+  var root = document.documentElement, btn = document.getElementById('theme-btn');
+  if (!btn) return;
+  var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  function current(){
+    var t = root.getAttribute('data-theme');
+    if (t === 'dark' || t === 'light') return t;
+    return mq && mq.matches ? 'dark' : 'light';
+  }
+  function label(){
+    var text = current() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
+    btn.setAttribute('aria-label', text);
+    btn.title = text;
+  }
+  btn.addEventListener('click', function(){
+    var next = current() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    label();
+  });
+  if (mq && mq.addEventListener) mq.addEventListener('change', label);
+  label();
+})();
+
+/* Hidden: type "hawking" anywhere (or tap the footer signature seven times) and the page evaporates, then comes back. */
+(function(){
+  var buf = '', busy = false, taps = 0, tapTimer = 0;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.addEventListener('keydown', function(e){
+    var tag = e.target && e.target.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (!e.key || e.key.length !== 1) return;
+    buf = (buf + e.key.toLowerCase()).slice(-7);
+    if (buf === 'hawking'){ buf = ''; evaporate(); }
+  });
+  var sig = document.querySelector('.foot .sig');
+  if (sig) sig.addEventListener('click', function(){
+    taps++; clearTimeout(tapTimer);
+    tapTimer = setTimeout(function(){ taps = 0; }, 2500);
+    if (taps >= 7){ taps = 0; evaporate(); }
+  });
+  function toast(msg){
+    var t = document.createElement('div');
+    t.className = 'egg-toast'; t.setAttribute('role', 'status'); t.textContent = msg;
+    document.body.appendChild(t);
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ t.classList.add('on'); }); });
+    setTimeout(function(){ t.classList.remove('on'); setTimeout(function(){ if (t.parentNode) t.parentNode.removeChild(t); }, 600); }, 4500);
+  }
+  var MSG = 'Evaporated, then restored. If evaporation is unitary, no information is lost.';
+  function evaporate(){
+    if (busy) return; busy = true;
+    var parts = Array.prototype.slice.call(document.querySelectorAll('header.top, main, footer.foot, #pairs'));
+    function restore(){ parts.forEach(function(p){ p.style.opacity = ''; p.style.filter = ''; }); }
+    if (reduce){
+      parts.forEach(function(p){ p.style.transition = 'opacity .3s'; p.style.opacity = '0.15'; });
+      setTimeout(function(){ restore(); busy = false; toast(MSG); }, 700);
+      return;
+    }
+    var cs = getComputedStyle(document.documentElement);
+    var cols = ['--ink', '--pine', '--chinar'].map(function(k){ return cs.getPropertyValue(k).trim(); });
+    var W = window.innerWidth, H = window.innerHeight, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var cv = document.createElement('canvas');
+    cv.className = 'egg-canvas'; cv.setAttribute('aria-hidden', 'true');
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    document.body.appendChild(cv);
+    var ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var blocks = Array.prototype.slice.call(document.querySelectorAll('h1, h2, h3, p, li, dt, dd, .brand, .nav a'))
+      .map(function(e){ return e.getBoundingClientRect(); })
+      .filter(function(r){ return r.width > 4 && r.height > 4 && r.bottom > 0 && r.top < H && r.right > 0 && r.left < W; });
+    if (!blocks.length) blocks = [{ left: 0, top: 0, width: W, height: H }];
+    var N = Math.min(420, Math.max(160, Math.round(W * H / 2600))), ps = [];
+    for (var i = 0; i < N; i++){
+      var b = blocks[(Math.random() * blocks.length) | 0];
+      var x = b.left + Math.random() * b.width, y = b.top + Math.random() * b.height;
+      var ang = Math.random() * Math.PI * 2, sp = 60 + Math.random() * 200;
+      ps.push({ x0: x, y0: y, x: x, y: y, dx: Math.cos(ang) * sp, dy: Math.sin(ang) * sp - 90, c: cols[(Math.random() * 3) | 0], r: 1 + Math.random() * 1.6 });
+    }
+    parts.forEach(function(p){ p.style.transition = 'opacity .8s ease, filter .8s ease'; p.style.opacity = '0'; p.style.filter = 'blur(4px)'; });
+    var t0 = performance.now(), OUT = 1.7, HOLD = 0.5, BACK = 1.6, shown = false;
+    function ease(k){ return k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
+    function frame(now){
+      var t = (now - t0) / 1000, end = OUT + HOLD + BACK;
+      ctx.clearRect(0, 0, W, H);
+      var alpha = t > end ? Math.max(0, 1 - (t - end) / 0.4) : 0.85;
+      ps.forEach(function(p){
+        if (t < OUT){ var k = t / OUT, e = 1 - (1 - k) * (1 - k); p.x = p.x0 + p.dx * e; p.y = p.y0 + p.dy * e; p.xe = p.x; p.ye = p.y; }
+        else if (t >= OUT + HOLD){ var u = Math.min(1, (t - OUT - HOLD) / BACK), f = ease(u); p.x = p.xe + (p.x0 - p.xe) * f; p.y = p.ye + (p.y0 - p.ye) * f; }
+        ctx.globalAlpha = alpha; ctx.fillStyle = p.c;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+      });
+      if (!shown && t >= OUT + HOLD + BACK * 0.6){ shown = true; restore(); }
+      if (t < end + 0.4) requestAnimationFrame(frame);
+      else { if (cv.parentNode) cv.parentNode.removeChild(cv); busy = false; toast(MSG); }
+    }
+    requestAnimationFrame(frame);
+  }
+})();
+
+</script>
+</body>
+</html>

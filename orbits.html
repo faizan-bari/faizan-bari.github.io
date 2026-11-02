@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Orbits around a black hole | Faizan Bari</title>
+<meta name="description" content="Launch a particle around a Schwarzschild black hole and watch it precess, whirl, fly by or plunge.">
+<meta property="og:title" content="Orbits around a black hole | Faizan Bari">
+<meta property="og:description" content="Launch a particle around a Schwarzschild black hole and watch it precess, whirl, fly by or plunge.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 15 L5 30 M16 15 L27 30' stroke='%232B5D51' stroke-width='2.2' fill='none'/%3E%3Ccircle cx='16' cy='13' r='6' fill='%23A33F28'/%3E%3C/svg%3E">
+<script>try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
+<style>
+/* Layout: one reading column; on wide screens each section's name sits in a left margin column. The journey is drawn as a worldline, each event with its future light cone. */
+:root{
+  --paper:#F3F5F2;
+  --surface:#E7ECE8;
+  --ink:#16202A;
+  --muted:#56616B;
+  --rule:#D2D9D5;
+  --pine:#2B5D51;
+  --chinar:#A33F28;
+  --font-display:"Gloock","Iowan Old Style",Georgia,serif;
+  --font-body:"Newsreader","Iowan Old Style",Georgia,serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F151B; --surface:#17202A; --ink:#E4E9E6; --muted:#9AA5A2; --rule:#2A333C; --pine:#86BEAD; --chinar:#E3825F; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F151B; --surface:#17202A; --ink:#E4E9E6; --muted:#9AA5A2; --rule:#2A333C; --pine:#86BEAD; --chinar:#E3825F; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:1.1875rem;
+  line-height:1.65;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  position:relative;
+}
+.wrap{max-width:66rem;margin:0 auto}
+a{color:var(--pine);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--chinar)}
+:focus-visible{outline:2px solid var(--chinar);outline-offset:3px;border-radius:2px}
+p{margin:0}
+.mono{font-family:var(--font-mono);font-size:.76rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+button{font:inherit}
+
+/* Header */
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.75rem 1.5rem;padding-block:1.5rem;border-bottom:1px solid var(--rule)}
+.brand{font-family:var(--font-display);font-size:1.4rem;color:var(--ink);text-decoration:none}
+.nav{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem 1.3rem;font-family:var(--font-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
+.nav a{color:var(--muted);text-decoration:none}
+.nav a:hover,.nav a[aria-current="page"]{color:var(--ink)}
+.theme-btn{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;padding:0;border:1px solid var(--rule);border-radius:50%;background:transparent;color:var(--muted);cursor:pointer}
+.theme-btn:hover{color:var(--ink);border-color:var(--ink)}
+.theme-btn svg{width:14px;height:14px;display:block}
+
+/* Hero (home) */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 15.5rem;gap:2.5rem 4rem;align-items:end;padding-block:4.5rem 3.75rem;position:relative}
+.hero-text{min-width:0}
+.hero h1{font-family:var(--font-display);font-weight:400;font-size:clamp(3.25rem,10vw,6.5rem);line-height:.95;letter-spacing:-.01em;margin:.9rem 0 1.4rem;text-wrap:balance}
+.lede{font-size:1.4rem;line-height:1.5;max-width:33rem;text-wrap:pretty}
+
+/* Page hero (inner pages) */
+.page-hero{padding-block:3.5rem 2.75rem}
+.page-hero h1{font-family:var(--font-display);font-weight:400;font-size:clamp(2.6rem,7vw,4.25rem);line-height:1;letter-spacing:-.005em;margin:.8rem 0 1.1rem;text-wrap:balance}
+
+/* Sections */
+.block{display:grid;grid-template-columns:13rem minmax(0,1fr);gap:1.25rem 3.5rem;padding-block:3.5rem;border-top:1px solid var(--rule)}
+.block-head{min-width:0}
+.block-head h2{font-family:var(--font-display);font-weight:400;font-size:2.1rem;line-height:1.1;margin:.45rem 0 .7rem;text-wrap:balance}
+.note{font-size:.95rem;line-height:1.5;color:var(--muted);max-width:15rem}
+.block-body{min-width:0;max-width:36rem;display:flex;flex-direction:column;gap:1.1rem}
+.block-body.wide{max-width:44rem}
+.more{font-family:var(--font-mono);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase}
+.links-row{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}
+
+/* Lists of things (explore, notes, reading) */
+.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.items > li{display:flex;flex-direction:column;gap:.3rem;padding-block:1.1rem;border-bottom:1px solid var(--rule)}
+.items > li:first-child{padding-top:0}
+.items h3{font-family:var(--font-body);font-size:1.25rem;font-weight:500;line-height:1.3;margin:0}
+.items h3 a{color:var(--ink);text-decoration-color:var(--rule)}
+.items h3 a:hover{color:var(--pine);text-decoration-color:currentColor}
+.meta{font-family:var(--font-mono);font-size:.76rem;letter-spacing:.04em;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem 2rem;padding-block:2.25rem 3rem;border-top:1px solid var(--rule)}
+.foot .nav{gap:.35rem 1.1rem;font-size:.72rem}
+
+/* Hidden evaporation */
+.egg-canvas{position:fixed;inset:0;z-index:60;pointer-events:none}
+.egg-toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom, 0px));transform:translate(-50%,12px);opacity:0;transition:opacity .4s ease,transform .4s ease;background:var(--ink);color:var(--paper);font-family:var(--font-mono);font-size:.8rem;line-height:1.5;padding:.75rem 1rem;border-radius:4px;z-index:61;width:max-content;max-width:calc(100vw - 32px)}
+.egg-toast.on{opacity:1;transform:translate(-50%,0)}
+.sig{cursor:default;user-select:none}
+
+@media (max-width:780px){
+  .hero{grid-template-columns:minmax(0,1fr);padding-block:3rem 2.75rem;gap:2.25rem}
+  .block{grid-template-columns:minmax(0,1fr);padding-block:2.75rem;gap:1rem}
+  .note{max-width:28rem}
+  .page-hero{padding-block:2.75rem 2rem}
+}
+@media (max-width:480px){
+  body{font-size:1.125rem}
+  .lede{font-size:1.25rem}
+}
+
+.orb{display:flex;flex-direction:column;gap:1.1rem}
+.orb-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:1.25rem;align-items:start}
+.orb-canvas{width:100%;aspect-ratio:1/1;max-width:100%;display:block;background:var(--surface);border-radius:4px}
+.pot svg{display:block;width:100%;height:auto}
+.pot text{font-family:var(--font-mono);font-size:12px;fill:var(--muted)}
+.pot .vcurve{fill:none;stroke:var(--ink);stroke-width:1.8}
+.pot .eline{stroke:var(--chinar);stroke-width:1.4;stroke-dasharray:6 5}
+.pot .ax{stroke:var(--muted);stroke-width:1;fill:none}
+.pot .mark{stroke:var(--rule);stroke-width:1;stroke-dasharray:2 4}
+.pot .now{fill:var(--chinar)}
+.pot .start{fill:none;stroke:var(--chinar);stroke-width:1.5}
+.presets{display:flex;flex-wrap:wrap;gap:.5rem}
+.presets button{font-family:var(--font-mono);font-size:.76rem;letter-spacing:.03em;color:var(--ink);background:transparent;border:1px solid var(--rule);border-radius:999px;padding:.35rem .85rem;cursor:pointer}
+.presets button:hover{border-color:var(--ink)}
+.presets button[aria-pressed="true"]{border-color:var(--pine);color:var(--pine);background:var(--surface)}
+.sliders{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.6rem 1rem;align-items:center}
+.sliders input[type=range]{width:100%;accent-color:var(--pine)}
+.sliders output{font-family:var(--font-mono);font-size:.85rem;font-variant-numeric:tabular-nums;min-width:5.5rem;text-align:right}
+.stats{display:flex;flex-wrap:wrap;gap:1rem 2rem}
+.stat{display:flex;flex-direction:column;gap:.1rem;min-width:7rem}
+.stat .v{font-family:var(--font-display);font-size:1.45rem;line-height:1.2;font-variant-numeric:tabular-nums}
+.fate{background:var(--surface);border-radius:4px;padding:1rem 1.25rem;font-size:1.02rem;line-height:1.6}
+.legend-note{font-family:var(--font-mono);font-size:.74rem;color:var(--muted);line-height:1.6}
+@media (max-width:700px){ .orb-grid{grid-template-columns:minmax(0,1fr)} }
+</style>
+</head>
+<body>
+<header class="wrap top">
+  <a class="brand" href="index.html">Faizan Bari</a>
+  <nav class="nav" aria-label="Site">
+    <a href="index.html#explore">Explore</a>
+    <a href="now.html">Now</a>
+    <a href="notes.html">Notes</a>
+    <a href="reading.html">Reading</a>
+    <a href="essays.html">Essays</a>
+    <a href="cv.html">CV</a>
+    <a href="index.html#contact">Contact</a>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Switch theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1.5 A6.5 6.5 0 0 1 8 14.5 Z" fill="currentColor"/></svg></button>
+  </nav>
+</header>
+
+<main>
+  <section class="wrap page-hero" aria-labelledby="ph">
+    <p class="mono">Explore</p>
+    <h1 id="ph">Orbits around a black hole</h1>
+    <p class="lede">Close to a black hole, orbits stop closing up into ellipses. They swing round, whirl, and below a certain radius they can't stay up at all.</p>
+  </section>
+
+  <section class="wrap block" aria-labelledby="orb-h">
+    <div class="block-head">
+      <p class="mono">Interactive</p>
+      <h2 id="orb-h">Launch a particle</h2>
+      <p class="note">The particle starts at rest in the radial direction at the starting radius. Choose its angular momentum, or pick an example. Units: G = c = M = 1.</p>
+    </div>
+    <div class="block-body wide orb">
+      <div class="presets" role="group" aria-label="Examples">
+        <button type="button" data-l="4" data-r="20" aria-pressed="true">Precessing orbit</button>
+        <button type="button" data-l="3.8" data-r="31.9" aria-pressed="false">Zoom and whirl</button>
+        <button type="button" data-l="4" data-r="12" aria-pressed="false">Circular orbit</button>
+        <button type="button" data-l="3.47" data-r="6.37" aria-pressed="false">Near the last stable orbit</button>
+        <button type="button" data-l="3.4" data-r="12" aria-pressed="false">Plunge</button>
+        <button type="button" data-l="5" data-r="6" aria-pressed="false">Fly-by</button>
+      </div>
+      <div class="orb-grid">
+        <canvas class="orb-canvas" id="orb-canvas" role="img" aria-label="Top-down view of the particle's orbit around the black hole, with the photon sphere at 3M and the last stable orbit at 6M marked."></canvas>
+        <div class="pot">
+          <p class="mono">Effective potential</p>
+          <svg id="orb-pot" viewBox="0 0 320 260" role="img" aria-label="Effective potential against radius, with the particle's energy shown as a dashed line."></svg>
+          <p class="legend-note">Solid: V(r). Dashed: the particle's E². It can only be where E² ≥ V.</p>
+        </div>
+      </div>
+      <div class="sliders">
+        <label for="orb-L" class="mono">Angular momentum</label>
+        <input type="range" id="orb-L" min="3" max="6" step="0.01" value="4">
+        <output id="orb-Lout" for="orb-L">L = 4.00</output>
+        <label for="orb-r" class="mono">Start radius</label>
+        <input type="range" id="orb-r" min="3" max="40" step="0.01" value="20">
+        <output id="orb-rout" for="orb-r">r₀ = 20.0</output>
+      </div>
+      <div class="stats">
+        <div class="stat"><span class="mono">Energy E</span><span class="v" id="orb-E">0.968</span></div>
+        <div class="stat"><span class="mono">Closest approach</span><span class="v" id="orb-min">—</span></div>
+        <div class="stat"><span class="mono">Periapsis shift</span><span class="v" id="orb-adv">—</span></div>
+      </div>
+      <p class="fate" id="orb-fate" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="wrap block" aria-labelledby="orb-p">
+    <div class="block-head">
+      <p class="mono">The physics</p>
+      <h2 id="orb-p">Why orbits misbehave</h2>
+    </div>
+    <div class="block-body">
+      <p>For a particle moving in the plane around a Schwarzschild black hole, energy E and angular momentum L per unit mass are conserved, and the radial motion obeys (dr/dτ)² = E² − V(r) with</p>
+      <p class="legend-note" style="font-size:.95rem;text-align:center">V(r) = (1 − 2M/r)(1 + L²/r²) = 1 − 2M/r + L²/r² − 2ML²/r³</p>
+      <p>The first three terms are Newton's gravity plus the centrifugal barrier. The last one is general relativity. It pulls harder close in, which makes orbits precess, puts the last stable circular orbit at r = 6M, and lets a particle with too little angular momentum fall straight in. Mercury's orbit precesses by 43 arcseconds per century for the same reason; near a black hole the shift can be hundreds of degrees per orbit.</p>
+      <p>The orbit is computed by integrating d²u/dφ² + u = M/L² + 3Mu², with u = 1/r. The particle moves at a pace set by its own proper time.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p class="mono sig">Faizan Bari · 2026</p>
+  <nav class="nav" aria-label="Footer">
+    <a href="index.html#explore">Explore</a>
+    <a href="now.html">Now</a>
+    <a href="notes.html">Notes</a>
+    <a href="reading.html">Reading</a>
+    <a href="essays.html">Essays</a>
+    <a href="cv.html">CV</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</footer>
+<script>
+
+/* Light/dark switch */
+(function(){
+  var root = document.documentElement, btn = document.getElementById('theme-btn');
+  if (!btn) return;
+  var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  function current(){
+    var t = root.getAttribute('data-theme');
+    if (t === 'dark' || t === 'light') return t;
+    return mq && mq.matches ? 'dark' : 'light';
+  }
+  function label(){
+    var text = current() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
+    btn.setAttribute('aria-label', text);
+    btn.title = text;
+  }
+  btn.addEventListener('click', function(){
+    var next = current() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    label();
+  });
+  if (mq && mq.addEventListener) mq.addEventListener('change', label);
+  label();
+})();
+
+/* Hidden: type "hawking" anywhere (or tap the footer signature seven times) and the page evaporates, then comes back. */
+(function(){
+  var buf = '', busy = false, taps = 0, tapTimer = 0;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.addEventListener('keydown', function(e){
+    var tag = e.target && e.target.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (!e.key || e.key.length !== 1) return;
+    buf = (buf + e.key.toLowerCase()).slice(-7);
+    if (buf === 'hawking'){ buf = ''; evaporate(); }
+  });
+  var sig = document.querySelector('.foot .sig');
+  if (sig) sig.addEventListener('click', function(){
+    taps++; clearTimeout(tapTimer);
+    tapTimer = setTimeout(function(){ taps = 0; }, 2500);
+    if (taps >= 7){ taps = 0; evaporate(); }
+  });
+  function toast(msg){
+    var t = document.createElement('div');
+    t.className = 'egg-toast'; t.setAttribute('role', 'status'); t.textContent = msg;
+    document.body.appendChild(t);
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ t.classList.add('on'); }); });
+    setTimeout(function(){ t.classList.remove('on'); setTimeout(function(){ if (t.parentNode) t.parentNode.removeChild(t); }, 600); }, 4500);
+  }
+  var MSG = 'Evaporated, then restored. If evaporation is unitary, no information is lost.';
+  function evaporate(){
+    if (busy) return; busy = true;
+    var parts = Array.prototype.slice.call(document.querySelectorAll('header.top, main, footer.foot, #pairs'));
+    function restore(){ parts.forEach(function(p){ p.style.opacity = ''; p.style.filter = ''; }); }
+    if (reduce){
+      parts.forEach(function(p){ p.style.transition = 'opacity .3s'; p.style.opacity = '0.15'; });
+      setTimeout(function(){ restore(); busy = false; toast(MSG); }, 700);
+      return;
+    }
+    var cs = getComputedStyle(document.documentElement);
+    var cols = ['--ink', '--pine', '--chinar'].map(function(k){ return cs.getPropertyValue(k).trim(); });
+    var W = window.innerWidth, H = window.innerHeight, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var cv = document.createElement('canvas');
+    cv.className = 'egg-canvas'; cv.setAttribute('aria-hidden', 'true');
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    document.body.appendChild(cv);
+    var ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var blocks = Array.prototype.slice.call(document.querySelectorAll('h1, h2, h3, p, li, dt, dd, .brand, .nav a'))
+      .map(function(e){ return e.getBoundingClientRect(); })
+      .filter(function(r){ return r.width > 4 && r.height > 4 && r.bottom > 0 && r.top < H && r.right > 0 && r.left < W; });
+    if (!blocks.length) blocks = [{ left: 0, top: 0, width: W, height: H }];
+    var N = Math.min(420, Math.max(160, Math.round(W * H / 2600))), ps = [];
+    for (var i = 0; i < N; i++){
+      var b = blocks[(Math.random() * blocks.length) | 0];
+      var x = b.left + Math.random() * b.width, y = b.top + Math.random() * b.height;
+      var ang = Math.random() * Math.PI * 2, sp = 60 + Math.random() * 200;
+      ps.push({ x0: x, y0: y, x: x, y: y, dx: Math.cos(ang) * sp, dy: Math.sin(ang) * sp - 90, c: cols[(Math.random() * 3) | 0], r: 1 + Math.random() * 1.6 });
+    }
+    parts.forEach(function(p){ p.style.transition = 'opacity .8s ease, filter .8s ease'; p.style.opacity = '0'; p.style.filter = 'blur(4px)'; });
+    var t0 = performance.now(), OUT = 1.7, HOLD = 0.5, BACK = 1.6, shown = false;
+    function ease(k){ return k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
+    function frame(now){
+      var t = (now - t0) / 1000, end = OUT + HOLD + BACK;
+      ctx.clearRect(0, 0, W, H);
+      var alpha = t > end ? Math.max(0, 1 - (t - end) / 0.4) : 0.85;
+      ps.forEach(function(p){
+        if (t < OUT){ var k = t / OUT, e = 1 - (1 - k) * (1 - k); p.x = p.x0 + p.dx * e; p.y = p.y0 + p.dy * e; p.xe = p.x; p.ye = p.y; }
+        else if (t >= OUT + HOLD){ var u = Math.min(1, (t - OUT - HOLD) / BACK), f = ease(u); p.x = p.xe + (p.x0 - p.xe) * f; p.y = p.ye + (p.y0 - p.ye) * f; }
+        ctx.globalAlpha = alpha; ctx.fillStyle = p.c;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+      });
+      if (!shown && t >= OUT + HOLD + BACK * 0.6){ shown = true; restore(); }
+      if (t < end + 0.4) requestAnimationFrame(frame);
+      else { if (cv.parentNode) cv.parentNode.removeChild(cv); busy = false; toast(MSG); }
+    }
+    requestAnimationFrame(frame);
+  }
+})();
+
+(function(){
+  var canvas = document.getElementById('orb-canvas');
+  var pot = document.getElementById('orb-pot');
+  if (!canvas || !pot) return;
+  var ctx = canvas.getContext('2d');
+  var NS = 'http://www.w3.org/2000/svg';
+  var Lin = document.getElementById('orb-L'), Rin = document.getElementById('orb-r');
+  var presets = Array.prototype.slice.call(document.querySelectorAll('.presets button'));
+  var reduce = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  var col = {};
+  function readColors(){
+    var cs = getComputedStyle(document.documentElement);
+    ['ink', 'muted', 'rule', 'pine', 'chinar', 'surface'].forEach(function(k){ col[k] = cs.getPropertyValue('--' + k).trim(); });
+  }
+  function V(r, L){ return (1 - 2 / r) * (1 + L * L / (r * r)); }
+
+  function compute(L, r0){
+    var h = 0.004, u = 1 / r0, du = 0, phi = 0, tau = 0;
+    function f(x){ return 1 / (L * L) - x + 3 * x * x; }
+    var outward = f(u) < -1e-12;
+    var pts = [[r0, 0, 0]], fate = 'bound', peri = [], prev = 0, step = 0;
+    var rmin = r0, rmax = r0;
+    while (phi < 24 * Math.PI){
+      var k1u = du, k1v = f(u);
+      var k2u = du + h / 2 * k1v, k2v = f(u + h / 2 * k1u);
+      var k3u = du + h / 2 * k2v, k3v = f(u + h / 2 * k2u);
+      var k4u = du + h * k3v, k4v = f(u + h * k3u);
+      var un = u + h / 6 * (k1u + 2 * k2u + 2 * k3u + k4u);
+      du = du + h / 6 * (k1v + 2 * k2v + 2 * k3v + k4v);
+      var um = 0.5 * (u + un);
+      tau += h / (L * um * um);
+      u = un; phi += h; step++;
+      if (u >= 0.5){ fate = 'plunge'; pts.push([2, phi, tau]); rmin = 2; break; }
+      if (u <= 1 / 80 && du < 0){ fate = 'escape'; pts.push([1 / u, phi, tau]); rmax = 80; break; }
+      if (prev > 0 && du <= 0) peri.push([phi, tau]);
+      prev = du;
+      var r = 1 / u; if (r < rmin) rmin = r; if (r > rmax) rmax = r;
+      if (step % 3 === 0) pts.push([r, phi, tau]);
+    }
+    if (fate === 'escape' && outward){
+      var back = pts.slice(1).reverse().map(function(p){ return [p[0], -p[1], -p[2]]; });
+      pts = back.concat(pts);
+      var t0 = pts[0][2];
+      pts = pts.map(function(p){ return [p[0], p[1], p[2] - t0]; });
+    }
+    if (fate === 'bound' && rmax - rmin < 0.002 * r0) fate = 'circular';
+    var adv = null, period = null;
+    if (peri.length >= 2){ adv = (peri[1][0] - peri[0][0] - 2 * Math.PI) * 180 / Math.PI; period = peri[1][1] - peri[0][1]; }
+    if (fate === 'circular') period = 2 * Math.PI * r0 * r0 / L;
+    return { pts: pts, fate: fate, adv: adv, period: period, E2: V(r0, L), rmin: rmin, rmax: rmax, tauTotal: pts[pts.length - 1][2], L: L, r0: r0 };
+  }
+
+  var orbit = null, simTau = 0, last = 0, raf = 0, running = false, onScreen = true, size = 0, dpr = 1;
+  function resize(){
+    var w = canvas.clientWidth || 300;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    size = w;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(w * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function viewR(){ return Math.max(9, Math.min(60, orbit.rmax * 1.12)); }
+  function toXY(r, phi){
+    var s = (size / 2) / viewR();
+    return [size / 2 + r * Math.cos(phi) * s, size / 2 - r * Math.sin(phi) * s];
+  }
+  function indexAt(t){
+    var p = orbit.pts, lo = 0, hi = p.length - 1;
+    if (t <= p[0][2]) return 0;
+    if (t >= p[hi][2]) return hi;
+    while (hi - lo > 1){ var m = (lo + hi) >> 1; if (p[m][2] < t) lo = m; else hi = m; }
+    return hi;
+  }
+  function draw(){
+    if (!orbit) return;
+    ctx.clearRect(0, 0, size, size);
+    var s = (size / 2) / viewR(), c = size / 2;
+    ctx.setLineDash([3, 4]); ctx.lineWidth = 1; ctx.strokeStyle = col.muted;
+    [3, 6].forEach(function(r){ ctx.beginPath(); ctx.arc(c, c, r * s, 0, Math.PI * 2); ctx.stroke(); });
+    ctx.setLineDash([]);
+    ctx.fillStyle = col.ink; ctx.beginPath(); ctx.arc(c, c, 2 * s, 0, Math.PI * 2); ctx.fill();
+    ctx.font = '11px "IBM Plex Mono", ui-monospace, monospace'; ctx.fillStyle = col.muted;
+    if (6 * s > 34) ctx.fillText('6M', c + 6 * s * 0.72 + 4, c - 6 * s * 0.72);
+    if (3 * s > 24) ctx.fillText('3M', c + 3 * s * 0.72 + 4, c - 3 * s * 0.72);
+    var p = orbit.pts, i;
+    ctx.lineWidth = 1; ctx.strokeStyle = col.muted; ctx.globalAlpha = 0.45; ctx.beginPath();
+    for (i = 0; i < p.length; i++){ var q = toXY(p[i][0], p[i][1]); if (i) ctx.lineTo(q[0], q[1]); else ctx.moveTo(q[0], q[1]); }
+    ctx.stroke(); ctx.globalAlpha = 1;
+    var k = indexAt(simTau);
+    var trailT = orbit.period ? orbit.period * 0.35 : orbit.tauTotal * 0.15;
+    var j0 = indexAt(simTau - trailT);
+    ctx.lineWidth = 2.4; ctx.strokeStyle = col.pine; ctx.lineCap = 'round'; ctx.beginPath();
+    for (i = j0; i <= k; i++){ var w = toXY(p[i][0], p[i][1]); if (i === j0) ctx.moveTo(w[0], w[1]); else ctx.lineTo(w[0], w[1]); }
+    ctx.stroke();
+    var d = toXY(p[k][0], p[k][1]);
+    ctx.fillStyle = col.chinar; ctx.beginPath(); ctx.arc(d[0], d[1], 4.5, 0, Math.PI * 2); ctx.fill();
+    potNow(p[k][0]);
+  }
+
+  var potNowDot = null, potScale = null;
+  function el(name, attrs, parent, text){
+    var e = document.createElementNS(NS, name);
+    for (var a in attrs) e.setAttribute(a, attrs[a]);
+    if (text != null) e.textContent = text;
+    parent.appendChild(e); return e;
+  }
+  function drawPot(){
+    while (pot.firstChild) pot.removeChild(pot.firstChild);
+    var L = orbit.L, E2 = orbit.E2;
+    var RP = Math.max(30, Math.min(60, orbit.r0 * 1.3));
+    var vmax = 0, r;
+    for (r = 2.5; r <= RP; r += 0.05) vmax = Math.max(vmax, V(r, L));
+    var y0 = 0.8, y1 = Math.max(1.08, Math.min(vmax * 1.04, 1.5), E2 + 0.03);
+    var Lx = 40, Rx = 12, Ty = 12, By = 34, W = 320, H = 260;
+    function X(r){ return Lx + (r - 2) / (RP - 2) * (W - Lx - Rx); }
+    function Y(v){ return Ty + (1 - (v - y0) / (y1 - y0)) * (H - Ty - By); }
+    potScale = { X: X, Y: Y };
+    el('path', { d: 'M' + Lx + ' ' + Ty + ' L' + Lx + ' ' + (H - By) + ' L' + (W - Rx) + ' ' + (H - By), class: 'ax' }, pot);
+    [3, 6].forEach(function(m){ el('line', { x1: X(m), x2: X(m), y1: Ty, y2: H - By, class: 'mark' }, pot); el('text', { x: X(m), y: H - By + 14, 'text-anchor': 'middle' }, pot, m + 'M'); });
+    el('text', { x: X(RP), y: H - By + 14, 'text-anchor': 'end' }, pot, Math.round(RP) + 'M');
+    el('text', { x: (Lx + W - Rx) / 2, y: H - 4, 'text-anchor': 'middle' }, pot, 'radius r');
+    [1].forEach(function(v){ if (v > y0 && v < y1){ el('text', { x: Lx - 6, y: Y(v) + 4, 'text-anchor': 'end' }, pot, '1'); } });
+    el('text', { x: Lx - 6, y: H - By + 4, 'text-anchor': 'end' }, pot, String(y0));
+    var d = '', first = true;
+    for (r = 2.02; r <= RP; r += 0.05){
+      var v = V(r, L); if (v < y0 || v > y1){ first = true; continue; }
+      d += (first ? 'M' : 'L') + X(r).toFixed(1) + ' ' + Y(v).toFixed(1); first = false;
+    }
+    el('path', { d: d, class: 'vcurve' }, pot);
+    el('line', { x1: Lx, x2: W - Rx, y1: Y(E2), y2: Y(E2), class: 'eline' }, pot);
+    el('text', { x: W - Rx, y: Y(E2) - 6, 'text-anchor': 'end', fill: 'currentColor' }, pot, 'E²');
+    if (orbit.r0 <= RP) el('circle', { cx: X(orbit.r0), cy: Y(E2), r: 5, class: 'start' }, pot);
+    potNowDot = el('circle', { cx: X(Math.min(orbit.r0, RP)), cy: Y(E2), r: 4, class: 'now' }, pot);
+  }
+  function potNow(r){
+    if (!potNowDot || !potScale) return;
+    var RPx = potScale.X(Math.min(r, 1e9));
+    potNowDot.setAttribute('cx', Math.max(40, Math.min(308, RPx)).toFixed(1));
+  }
+
+  function fmt(x, d){ return x.toFixed(d); }
+  function describe(o){
+    var E = Math.sqrt(o.E2);
+    document.getElementById('orb-E').textContent = fmt(E, 3);
+    document.getElementById('orb-min').textContent = (o.fate === 'plunge' ? '2M (horizon)' : fmt(o.rmin, 1) + 'M');
+    document.getElementById('orb-adv').textContent = o.adv != null ? Math.round(o.adv) + '° per orbit' : '—';
+    var t;
+    if (o.fate === 'circular' && o.r0 < 7) t = 'A circular orbit just outside r = 6M, the innermost stable circular orbit. At 6M the stable and unstable circular orbits merge; closer in, no circular orbit is stable, and the slightest nudge sends the particle away or in.';
+    else if (o.fate === 'circular') t = 'A stable circular orbit: the starting radius sits exactly at the bottom of the potential well.';
+    else if (o.fate === 'plunge') t = 'It plunges into the black hole. With this angular momentum the centrifugal barrier is too low to stop it: in general relativity, below L = √12 M (about 3.46) there is no barrier at all.';
+    else if (o.fate === 'escape') t = 'A fly-by. The particle has E > 1, more than its rest energy, so after swinging round the black hole it escapes to infinity.';
+    else if (o.adv != null && o.adv > 180) t = 'Zoom and whirl. The energy sits just below the top of the potential barrier, so at each close approach the particle whirls round the black hole several times before zooming back out.';
+    else t = 'A bound orbit that never closes: each closest approach is shifted forward. In Newtonian gravity this would be a fixed ellipse.';
+    document.getElementById('orb-fate').textContent = t;
+  }
+
+  function speed(){
+    if (orbit.period) return orbit.period / 5;
+    return orbit.tauTotal / 6;
+  }
+  function frame(now){
+    if (!running) return;
+    var dt = Math.min(0.05, (now - last) / 1000); last = now;
+    simTau += dt * speed();
+    if (simTau > orbit.tauTotal + speed() * 0.8) simTau = 0;
+    draw();
+    raf = requestAnimationFrame(frame);
+  }
+  function shouldRun(){ return !reduce.matches && onScreen && !document.hidden; }
+  function sync(){
+    if (shouldRun() && !running){ running = true; last = performance.now(); raf = requestAnimationFrame(frame); }
+    else if (!shouldRun() && running){ running = false; cancelAnimationFrame(raf); draw(); }
+  }
+  function update(){
+    var L = Number(Lin.value), r0 = Number(Rin.value);
+    document.getElementById('orb-Lout').textContent = 'L = ' + L.toFixed(2);
+    document.getElementById('orb-rout').textContent = 'r₀ = ' + r0.toFixed(1);
+    orbit = compute(L, r0);
+    simTau = reduce.matches ? orbit.tauTotal : 0;
+    drawPot(); describe(orbit); draw();
+  }
+  presets.forEach(function(b){
+    b.addEventListener('click', function(){
+      Lin.value = b.getAttribute('data-l'); Rin.value = b.getAttribute('data-r');
+      presets.forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      update();
+    });
+  });
+  [Lin, Rin].forEach(function(inp){
+    inp.addEventListener('input', function(){ presets.forEach(function(x){ x.setAttribute('aria-pressed', 'false'); }); update(); });
+  });
+  readColors(); resize(); update(); sync();
+  if ('IntersectionObserver' in window) new IntersectionObserver(function(e){ onScreen = e[0].isIntersecting; sync(); }).observe(canvas);
+  document.addEventListener('visibilitychange', sync);
+  if (reduce.addEventListener) reduce.addEventListener('change', function(){ update(); sync(); });
+  if (window.ResizeObserver) new ResizeObserver(function(){ resize(); draw(); }).observe(canvas);
+  else window.addEventListener('resize', function(){ resize(); draw(); });
+  var dark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  if (dark && dark.addEventListener) dark.addEventListener('change', function(){ readColors(); draw(); });
+  if (window.MutationObserver) new MutationObserver(function(){ readColors(); draw(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+</script>
+</body>
+</html>
